@@ -73,7 +73,7 @@
                                     class="col-sm-3 text-end control-label col-form-label">Password</label>
                                 <div class="col-sm-9">
                                     <input type="password" class="form-control" id="password" name="password"
-                                        placeholder="Password Here" />
+                                        placeholder="Password Here" value="{{$doctor->user['password']}}" />
                                 </div>
                             </div>
 
@@ -83,7 +83,7 @@
                                 </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="phone" name="phoneNumber"
-                                        placeholder="PhoneNumber Here" name="{{$doctor->user['phoneNumber']}}" />
+                                        placeholder="PhoneNumber Here" value="{{$doctor->user['phoneNumber']}}" />
                                 </div>
                             </div>
                             <div class="form-group row">

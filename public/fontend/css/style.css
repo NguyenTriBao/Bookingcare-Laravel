@@ -530,3 +530,89 @@
 .specialty-content{
     color: #1b2c51;
 }
+
+.doctor-card {
+    display: flex;
+    gap: 20px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    background-color: #fff;
+}
+
+.doctor-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 30%;
+}
+
+.doctor-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.favorite-badge {
+    background: #ffd700;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.doctor-details h4 {
+    color: #1e88e5;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.appointment-schedule {
+    width: 70%;
+}
+
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.time-slots button {
+    background-color: #f3f3f3;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100px; /* Đặt chiều rộng */
+    height: 40px; /* Đặt chiều cao */
+    font-size: 14px; /* Đặt kích cỡ chữ */
+}
+
+.time-slots button:hover {
+    background-color: #1e88e5;
+    color: #fff;
+}
+
+.fee-note {
+    font-size: 14px;
+    color: #666;
+}
+
+h5 {
+    margin: 10px 0 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+.img-fixed {
+    width: 300px; /* Chiều rộng cố định */
+    height: 400px; /* Chiều cao cố định */
+    object-fit: cover; /* Đảm bảo ảnh vừa khung mà không bị méo */
+}

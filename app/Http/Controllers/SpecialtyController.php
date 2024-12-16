@@ -6,18 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\Specialty;
 use App\Http\Requests\SpecialtyRequest;
 use App\Http\Requests\EditSpecialtyRequest;
+use App\Models\Doctor;
 class SpecialtyController extends Controller
 {
     private $specialty;
+    private $doctor;
 
-    public function __construct(Specialty $specialty){
+    public function __construct(Specialty $specialty, Doctor $doctor){
         $this->specialty = $specialty;
+        $this->doctor = $doctor;
     }
 
     //Get 1 Specialty
     public function detail ($id){
-        $detailSpecialty = Specialty::get()->where('id', $id)->first();
-        return view('clients.detail-specialty')->with('specialty', $detailSpecialty);
+        $specialty = Specialty::with(['doctors.user'])->find($id);
+        return view('clients.detail-specialty', compact('specialty'));
     }
     //Get all Specialties
     public function getAllSpecialty(){

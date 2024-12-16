@@ -31,6 +31,13 @@ class DoctorController extends Controller
         })->get();
         return view('admin.doctors.list-doctors', compact('doctors'));
     }
+    public function getAllDoctorClients(){
+        //$doctors = $this->user->where('roleId','R2')->get();
+        $doctors = Doctor::with('user')->whereHas('user', function($query) {
+            $query->where('roleId', 'R2'); // Lọc theo roleId của user
+        })->get();
+        return view('clients.team', compact('doctors'));
+    }
 
     //Create a new doctor
     public function addNewDoctor(){
@@ -111,5 +118,15 @@ class DoctorController extends Controller
             'gender' => $request->gender,
         ]);
         return redirect()->route('get_all_doctor');
+    }
+
+    public function detail($id){
+        $doctor = Doctor::with('user')
+        ->whereHas('user', function($query) use ($id) {
+            $query->where('doctorId', $id); // Lọc theo id của user
+        })
+        ->first();
+
+        return view('clients.detailDoctor',compact('doctor'));
     }
 }

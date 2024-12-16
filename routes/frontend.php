@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SpecialtyController;
+use App\Http\Controllers\DoctorController;
 
 Route::get('/',[HomeController::class, 'show']);
 Route::get('/about', function () {
@@ -29,8 +30,9 @@ Route::get('/testimonial', function () {
 Route::get('/404', function () {
     return view('clients.404');
 });
-Route::get('/detail-doctor', function(){
-    return view('clients.detailDoctor');
-});
 //Specialty
 Route::get('/detail-specialty/{id}',[SpecialtyController::class, 'detail'])->name('detail_specialty');
+
+//Doctor
+Route::get('/detail-doctor/{id}', [DoctorController::class, 'detail'])->name('detail_doctor');
+Route::get('/team',[DoctorController::class, 'getAllDoctorClients']);
