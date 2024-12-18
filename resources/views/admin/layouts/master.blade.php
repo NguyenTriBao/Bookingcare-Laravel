@@ -12,6 +12,9 @@
         content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework" />
     <meta name="robots" content="noindex,nofollow" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Markdown -->
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
     @yield('title')
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('backend/assets/images/favicon.png')}}" />
@@ -45,9 +48,9 @@
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
-    @include('admin.components.header')
-    @yield('content')
-    @include('admin.components.footer')
+        @include('admin.components.header')
+        @yield('content')
+        @include('admin.components.footer')
 
 
         <!-- ============================================================== -->
@@ -62,7 +65,7 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-     
+
     <script src="{{asset('backend/assets/libs/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{{asset('backend/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
@@ -86,43 +89,43 @@
     <script src="{{asset('backend/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js')}}"></script>
     <script src="{{asset('backend/dist/js/pages/chart/chart-page-init.js')}}"></script>
     <script>
-      // Basic Example with form
-      var form = $("#example-form");
-      form.validate({
+    // Basic Example with form
+    var form = $("#example-form");
+    form.validate({
         errorPlacement: function errorPlacement(error, element) {
-          element.before(error);
+            element.before(error);
         },
         rules: {
-          confirm: {
-            equalTo: "#password",
-          },
+            confirm: {
+                equalTo: "#password",
+            },
         },
-      });
-      form.children("div").steps({
+    });
+    form.children("div").steps({
         headerTag: "h3",
         bodyTag: "section",
         transitionEffect: "slideLeft",
-        onStepChanging: function (event, currentIndex, newIndex) {
-          form.validate().settings.ignore = ":disabled,:hidden";
-          return form.valid();
+        onStepChanging: function(event, currentIndex, newIndex) {
+            form.validate().settings.ignore = ":disabled,:hidden";
+            return form.valid();
         },
-        onFinishing: function (event, currentIndex) {
-          form.validate().settings.ignore = ":disabled";
-          return form.valid();
+        onFinishing: function(event, currentIndex) {
+            form.validate().settings.ignore = ":disabled";
+            return form.valid();
         },
-        onFinished: function (event, currentIndex) {
-          alert("Submitted!");
+        onFinished: function(event, currentIndex) {
+            alert("Submitted!");
         },
-      });
-</script>
-<script>
-      //***********************************//
-      // For select 2
-      //***********************************//
-      $(".select2").select2();
+    });
+    </script>
+    <script>
+    //***********************************//
+    // For select 2
+    //***********************************//
+    $(".select2").select2();
 
-      /*colorpicker*/
-      $(".demo").each(function () {
+    /*colorpicker*/
+    $(".demo").each(function() {
         //
         // Dear reader, it's actually very easy to initialize MiniColors. For example:
         //
@@ -133,28 +136,28 @@
         // only used for this demo.
         //
         $(this).minicolors({
-          control: $(this).attr("data-control") || "hue",
-          position: $(this).attr("data-position") || "bottom left",
+            control: $(this).attr("data-control") || "hue",
+            position: $(this).attr("data-position") || "bottom left",
 
-          change: function (value, opacity) {
-            if (!value) return;
-            if (opacity) value += ", " + opacity;
-            if (typeof console === "object") {
-              console.log(value);
-            }
-          },
-          theme: "bootstrap",
+            change: function(value, opacity) {
+                if (!value) return;
+                if (opacity) value += ", " + opacity;
+                if (typeof console === "object") {
+                    console.log(value);
+                }
+            },
+            theme: "bootstrap",
         });
-      });
-      /*datwpicker*/
-      jQuery(".mydatepicker").datepicker();
-      jQuery("#datepicker-autoclose").datepicker({
+    });
+    /*datwpicker*/
+    jQuery(".mydatepicker").datepicker();
+    jQuery("#datepicker-autoclose").datepicker({
         autoclose: true,
         todayHighlight: true,
-      });
-      var quill = new Quill("#editor", {
+    });
+    var quill = new Quill("#editor", {
         theme: "snow",
-      });
+    });
     </script>
 </body>
 

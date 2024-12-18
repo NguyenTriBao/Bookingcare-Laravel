@@ -52,7 +52,7 @@
                                             Edit
                                         </button>
                                     </a>
-                                    <a href="#" data-id="#" onclick="deleteSpecialty(this)">
+                                    <a href="#" data-id="{{$user['id']}}" onclick="deleteUser(this)">
                                         <button type="button" class="btn btn-danger btn-sm text-white">
                                             Delete
                                         </button>
@@ -79,11 +79,11 @@
 
 
     <script>
-    function deleteSpecialty(element) {
+    function deleteUser(element) {
         let id = element.getAttribute('data-id'); // Lấy giá trị từ thuộc tính data-id;
-        if (confirm('Are you sure you want to delete this specialty?')) {
+        if (confirm('Are you sure you want to delete this user?')) {
             $.ajax({
-                url: '/specialties/delete-specialty/' + id,
+                url: '/users/delete-user/' + id,
                 type: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -93,7 +93,7 @@
                     location.reload();
                 },
                 error: function(xhr, status, error) {
-                    alert('Error deleting Specialty');
+                    alert('Error deleting User');
                 }
             });
         } else {

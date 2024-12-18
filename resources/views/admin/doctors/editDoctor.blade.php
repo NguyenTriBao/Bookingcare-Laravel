@@ -47,8 +47,8 @@
                                 <label for="fname" class="col-sm-3 text-end control-label col-form-label">First
                                     Name</label>
                                 <div class="col-sm-9">
-                                <input type="hidden" class="form-control"
-                                name="id" value="{{$doctor->user['id']}}" />
+                                    <input type="hidden" class="form-control" name="id"
+                                        value="{{$doctor->user['id']}}" />
                                     <input type="text" class="form-control" id="fname" placeholder="First Name Here"
                                         name="fname" value="{{$doctor->user['firstName']}}" />
                                 </div>
@@ -161,7 +161,8 @@
                             <div class="form-group row">
                                 <label for="cono1" class="col-md-3 control-label col-form-label">Note</label>
                                 <div class="col-md-9">
-                                    <textarea class="form-control" id="Note" name="note">{{$doctor['note']}}</textarea>
+                                    <textarea id="markdown-editor" name="note"
+                                        class="form-control">{{$doctor['note']}}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -196,5 +197,9 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+    const easyMDE = new EasyMDE({
+        element: document.getElementById('markdown-editor'),
+        placeholder: "Viết nội dung Markdown tại đây...",
+    });
     </script>
     @endsection

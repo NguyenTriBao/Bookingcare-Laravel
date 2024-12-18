@@ -24,19 +24,6 @@
 
 <body class="bg-dark">
     <div class="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Preloader - style you can find in spinners.css -->
-        <!-- ============================================================== -->
-        <div class="preloader">
-            <div class="lds-ripple">
-                <div class="lds-pos"></div>
-                <div class="lds-pos"></div>
-            </div>
-        </div>
-        <!-- ============================================================== -->
-        <!-- Preloader - style you can find in spinners.css -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
         <!-- Login box.scss -->
         <!-- ============================================================== -->
         <div class="
@@ -55,7 +42,8 @@
                         </span>
                     </div>
                     <!-- Form -->
-                    <form class="form-horizontal mt-3" id="loginform" action="index.html">
+                    <form class="form-horizontal mt-3" action="/admin/login" method="POST">
+                    @csrf
                         <div class="row pb-4">
                             <div class="col-12">
                                 <div class="input-group mb-3">
@@ -63,16 +51,16 @@
                                         <span class="input-group-text bg-success text-white h-100" id="basic-addon1"><i
                                                 class="mdi mdi-account fs-4"></i></span>
                                     </div>
-                                    <input type="text" class="form-control form-control-lg" placeholder="Username"
-                                        aria-label="Username" aria-describedby="basic-addon1" required="" />
+                                    <input type="email" name="email" class="form-control form-control-lg" placeholder="Email"
+                                        aria-label="Username" aria-describedby="basic-addon1" required />
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-warning text-white h-100" id="basic-addon2"><i
                                                 class="mdi mdi-lock fs-4"></i></span>
                                     </div>
-                                    <input type="text" class="form-control form-control-lg" placeholder="Password"
-                                        aria-label="Password" aria-describedby="basic-addon1" required="" />
+                                    <input type="password" name="password" class="form-control form-control-lg" placeholder="Password"
+                                        aria-label="Password" aria-describedby="basic-addon1" required />
                                 </div>
                             </div>
                         </div>
@@ -92,7 +80,7 @@
                         </div>
                     </form>
                 </div>
-                <div id="recoverform">
+                <div id="recoverform" style="display: none;">
                     <div class="text-center">
                         <span class="text-white">Enter your e-mail address below and we will send you
                             instructions how to recover a password.</span>
@@ -150,12 +138,11 @@
     <!-- This page plugin js -->
     <!-- ============================================================== -->
     <script>
-    $(".preloader").fadeOut();
     // ==============================================================
     // Login and Recover Password
     // ==============================================================
     $("#to-recover").on("click", function() {
-        $("#loginform").slideUp();
+        $("#loginform").hide();
         $("#recoverform").fadeIn();
     });
     $("#to-login").click(function() {

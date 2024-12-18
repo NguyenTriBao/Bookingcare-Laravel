@@ -29,14 +29,15 @@
                 </div>
                 <div class="col-lg-9 col-md-6 wow fadeInUp py-3" data-wow-delay="0.3s">
                     <div class="team-item position-relative rounded overflow-hidden">
-                        <div class=" bg-light text-center ">
-                            {{$doctor->note}}
+                        <div class=" bg-light ">
+                        {!! $doctor->note !!}
                         </div>
                     </div>
                 </div>
             </div>
             <div class="description-Doctor border-top border-dark my-4 wow fadeInUp " data-wow-delay="0.5s">
-            <h2>Lịch khám</h2>
+            <h2>Schedules
+            </h2>
             <div class="time-slots">
                 <button>09:00 - 09:30</button>
                 <button>09:30 - 10:00</button>

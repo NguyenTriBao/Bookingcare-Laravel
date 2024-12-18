@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SpecialtyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/admin', function () {
     return view('admin.login');
@@ -17,12 +18,6 @@ Route::get('/widgets', function () {
 });
 Route::get('/charts', function () {
     return view('admin.charts');
-});
-Route::get('/form-wizard', function () {
-    return view('admin.form-wizard');
-});
-Route::get('/form-basic', function () {
-    return view('admin.form-basic');
 });
 Route::get('/pages-invoice', function () {
     return view('admin.pages-invoice');
@@ -38,6 +33,7 @@ Route::prefix('doctors')->group(function (){
     Route::post('/create', [DoctorController::class, 'store'])->name('create');
     Route::get('/edit-doctor/{id}',[DoctorController::class,'editDoctor'])->name('edit_doctor');
     Route::put('/update',[DoctorController::class,'update'])->name('update');
+    Route::delete('/delete-doctor/{id}', [DoctorController::class, 'delete'])->name('delete');
 });
 
 //SPECIALTIES
@@ -57,5 +53,17 @@ Route::prefix('specialties')->group(function () {
 Route::prefix('users')->group(function () {
     //Get all Specialties
     Route::get('/', [UserController::class, 'getAllUsers'])->name('get_all_users');
-   
+    Route::delete('/delete-user/{id}', [UserController::class, 'delete'])->name('delete');
+});
+
+//ADMIN
+Route::prefix('admin')->group(function (){
+    Route::post('/login',[AdminController::class, 'login'])->name('login');
+});
+
+//TEST MIDDLEWARE
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+    // Các route khác trong admin
 });

@@ -6,9 +6,6 @@ use App\Http\Controllers\SpecialtyController;
 use App\Http\Controllers\DoctorController;
 
 Route::get('/',[HomeController::class, 'show']);
-Route::get('/about', function () {
-    return view('clients.about');
-});
 Route::get('/service', function () {
     return view('clients.service');
 });
@@ -36,3 +33,6 @@ Route::get('/detail-specialty/{id}',[SpecialtyController::class, 'detail'])->nam
 //Doctor
 Route::get('/detail-doctor/{id}', [DoctorController::class, 'detail'])->name('detail_doctor');
 Route::get('/team',[DoctorController::class, 'getAllDoctorClients']);
+
+//About
+Route::get('/about',[DoctorController::class,'getAllDOctorAbout']);

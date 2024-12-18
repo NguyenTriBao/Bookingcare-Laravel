@@ -7,6 +7,11 @@ use App\Models\Doctor;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Parsedown;
+use Mews\Purifier\Facades\Purifier;
+use Illuminate\Support\Facades\Hash;
+
+
 
 class DoctorController extends Controller
 {
@@ -24,21 +29,29 @@ class DoctorController extends Controller
     }
 
     //Get all doctors
-    public function getAllDoctor(){
-        //$doctors = $this->user->where('roleId','R2')->get();
-        $doctors = Doctor::with('user')->whereHas('user', function($query) {
-            $query->where('roleId', 'R2'); // Lọc theo roleId của user
-        })->get();
-        return view('admin.doctors.list-doctors', compact('doctors'));
-    }
-    public function getAllDoctorClients(){
-        //$doctors = $this->user->where('roleId','R2')->get();
-        $doctors = Doctor::with('user')->whereHas('user', function($query) {
-            $query->where('roleId', 'R2'); // Lọc theo roleId của user
-        })->get();
-        return view('clients.team', compact('doctors'));
+    public function getAllDoctors($view)
+    {
+    $doctors = Doctor::with('user')->whereHas('user', function($query) {
+        $query->where('roleId', 'R2'); // Lọc theo roleId của user
+    })->get();
+
+    return view($view, compact('doctors'));
     }
 
+        // Để lấy danh sách bác sĩ cho admin
+    public function getAllDoctor(){
+        return $this->getAllDoctors('admin.doctors.list-doctors');
+    }
+
+    // Để lấy danh sách bác sĩ cho client (team)
+    public function getAllDoctorClients(){
+        return $this->getAllDoctors('clients.team');
+    }
+
+    // Để lấy danh sách bác sĩ cho client (about)
+    public function getAllDoctorAbout(){
+        return $this->getAllDoctors('clients.about');
+    }
     //Create a new doctor
     public function addNewDoctor(){
         $url = 'https://provinces.open-api.vn/api/';
@@ -56,7 +69,7 @@ class DoctorController extends Controller
     public function store(Request $request){
         $this->user->create([
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
             'firstName' => $request->fname,
             'lastName' => $request->lname,
             'address' => $request->address,
@@ -97,6 +110,7 @@ class DoctorController extends Controller
         $specialties = $this->specialty->all();
         return view('admin.doctors.editDoctor', compact('doctor', 'specialties', 'provinces','genders'));
     }
+    //update doctor
     public function update(Request $request){
         $doctor = $this->doctor->where('doctorId',$request->id)->first();
         // Kiểm tra người dùng có cập nhật ảnh mới hay không
@@ -119,14 +133,26 @@ class DoctorController extends Controller
         ]);
         return redirect()->route('get_all_doctor');
     }
-
+    //Detail doctors
     public function detail($id){
+        $parsedown = new Parsedown();
+        $parsedown->setBreaksEnabled(true);
         $doctor = Doctor::with('user')
         ->whereHas('user', function($query) use ($id) {
             $query->where('doctorId', $id); // Lọc theo id của user
         })
         ->first();
-
+        $doctor->note = Purifier::clean($parsedown->text($doctor->note));
         return view('clients.detailDoctor',compact('doctor'));
+    }
+    //Delete doctor
+    public function delete($id){
+        $doctor = $this->doctor->find($id);
+        if (!$doctor) {
+            return response()->json(['error' => 'Doctor not found'], 404);
+        }
+        $doctor->user()->delete();
+        $doctor->delete();
+        return response()->json(['success' => 'Doctor deleted successfully']);
     }
 }

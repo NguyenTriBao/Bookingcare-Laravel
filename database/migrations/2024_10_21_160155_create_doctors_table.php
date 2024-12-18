@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('doctorId')->unique();
             $table->unsignedBigInteger('specialtyId'); // Khóa ngoại
             $table->string('province');
-            $table->string('note');
+            $table->longtext('note');
             $table->string('image');
             $table->timestamps();
         });

@@ -16,7 +16,7 @@
 <div class="bg-light" style="width: 100%; height: 50px;"></div>
 <div class="container-xxl  py-5">
     <div style="margin: 0 0;">
-        <h2> Bác sĩ </h2>
+        <h2> Doctors </h2>
     </div>
 
 
@@ -27,7 +27,6 @@
         width="150" class="rounded-circle" />
             <div class="doctor-details">
                 <h4><a href="/detail-doctor/{{$doctor['doctorId']}}"> {{$doctor->user['lastName']}} {{$doctor->user['firstName']}} Doctor</a> </h4>
-                <p>{{$doctor['note']}}</p>
             </div>
         </div>
         <div class="appointment-schedule">

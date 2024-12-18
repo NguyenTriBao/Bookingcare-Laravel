@@ -38,24 +38,25 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="/" class="nav-item nav-link active">Home</a>
-                <a href="/about" class="nav-item nav-link">About</a>
-                <a href="/service" class="nav-item nav-link">Service</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                    <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-                        <a href="/feature" class="dropdown-item">Feature</a>
-                        <a href="/team" class="dropdown-item">Our Doctor</a>
-                        <a href="/appointment" class="dropdown-item">Appointment</a>
-                        <a href="/testimonial" class="dropdown-item">Testimonial</a>
-                        <a href="/404" class="dropdown-item">404 Page</a>
-                    </div>
-                </div>
-                <a href="/contact" class="nav-item nav-link">Contact</a>
+    <div class="navbar-nav ms-auto p-4 p-lg-0">
+        <a href="/" class="nav-item nav-link {{ Request::is('/') ? 'active' : '' }}">Home</a>
+        <a href="/about" class="nav-item nav-link {{ Request::is('about') ? 'active' : '' }}">About</a>
+        <a href="/service" class="nav-item nav-link {{ Request::is('service') ? 'active' : '' }}">Service</a>
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+            <div class="dropdown-menu rounded-0 rounded-bottom m-0">
+                <a href="/feature" class="dropdown-item {{ Request::is('feature') ? 'active' : '' }}">Feature</a>
+                <a href="/team" class="dropdown-item {{ Request::is('team') ? 'active' : '' }}">Our Doctor</a>
+                <a href="/appointment" class="dropdown-item {{ Request::is('appointment') ? 'active' : '' }}">Appointment</a>
+                <a href="/testimonial" class="dropdown-item {{ Request::is('testimonial') ? 'active' : '' }}">Testimonial</a>
+                <a href="/404" class="dropdown-item {{ Request::is('404') ? 'active' : '' }}">404 Page</a>
             </div>
-            <a href="/appointment" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
+        <a href="/contact" class="nav-item nav-link {{ Request::is('contact') ? 'active' : '' }}">Contact</a>
+    </div>
+    <a href="/appointment" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
+</div>
+
     </nav>
     <!-- Navbar End -->
 
