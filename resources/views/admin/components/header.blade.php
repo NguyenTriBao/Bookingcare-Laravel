@@ -117,7 +117,7 @@
                             Account
                             Setting</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off me-1 ms-1"></i>
+                        <a class="dropdown-item" href="/admin/logout"><i class="fa fa-power-off me-1 ms-1"></i>
                             Logout</a>
                         <div class="dropdown-divider"></div>
                         <div class="ps-4 p-10">
@@ -161,6 +161,10 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/doctors"
                         aria-expanded="false"><i class="me-2 mdi mdi-account"></i><span class="hide-menu">Doctors</span></a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/posts"
+                        aria-expanded="false"><i class="far fa-newspaper"></i><span class="hide-menu">Posts</span></a>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/charts"

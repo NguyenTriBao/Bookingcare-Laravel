@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SpecialtyController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\HandbookController;
 
 Route::get('/',[HomeController::class, 'show']);
 Route::get('/service', function () {
@@ -27,6 +28,7 @@ Route::get('/testimonial', function () {
 Route::get('/404', function () {
     return view('clients.404');
 });
+
 //Specialty
 Route::get('/detail-specialty/{id}',[SpecialtyController::class, 'detail'])->name('detail_specialty');
 
@@ -36,3 +38,6 @@ Route::get('/team',[DoctorController::class, 'getAllDoctorClients']);
 
 //About
 Route::get('/about',[DoctorController::class,'getAllDOctorAbout']);
+
+//News
+Route::get('/news',[HandbookController::class, 'getallPosts']);

@@ -6,12 +6,12 @@ use App\Http\Controllers\SpecialtyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HandbookController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\AdminMiddleware;
 
-Route::get('/admin', function () {
+Route::get('/admin/login', function () {
     return view('admin.login');
-});
-Route::get('/dashboard', function () {
-    return view('admin.index');
 });
 Route::get('/widgets', function () {
     return view('admin.widgets');
@@ -26,8 +26,28 @@ Route::get('pages-calendar', function () {
     return view('admin.pages-calendar');
 });
 
+//TEST MIDDLEWARE
+Route::get('/dashboard', function () {
+    if (Auth::check() && (Auth::user()->roleId === 'R1' || Auth::user()->roleId === 'R2')) {
+        return view('admin.index');
+    }
+    return redirect('/admin')->with('error', 'Access Denied!');
+});
+Route::middleware('auth')->group(function () {
+    Route::get('/admin', function () {
+        // Nếu chưa đăng nhập, chuyển hướng về trang /admin
+        return redirect('/admin');
+    });
+});
+
+//LOGIN AND LOGOUT
+Route::prefix('admin')->group(function (){
+    Route::post('/login',[AdminController::class, 'login'])->name('login');
+    Route::get('/logout',[AdminController::class, 'logout'])->name('logout');
+});
+
 //DOCTORS
-Route::prefix('doctors')->group(function (){
+Route::prefix('doctors')->middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/', [DoctorController::class, 'getAllDoctor'])->name('get_all_doctor');
     Route::get('/create-doctor',[DoctorController::class, 'addNewDoctor']);
     Route::post('/create', [DoctorController::class, 'store'])->name('create');
@@ -50,20 +70,18 @@ Route::prefix('specialties')->group(function () {
 });
 
 //USERS
-Route::prefix('users')->group(function () {
+Route::prefix('users')->middleware(['auth', AdminMiddleware::class])->group(function () {
     //Get all Specialties
     Route::get('/', [UserController::class, 'getAllUsers'])->name('get_all_users');
     Route::delete('/delete-user/{id}', [UserController::class, 'delete'])->name('delete');
 });
 
-//ADMIN
-Route::prefix('admin')->group(function (){
-    Route::post('/login',[AdminController::class, 'login'])->name('login');
-});
-
-//TEST MIDDLEWARE
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
-    // Các route khác trong admin
+//POSTS
+Route::prefix('posts')->middleware(['auth', AdminMiddleware::class])->group(function () {
+    Route::get('/', [HandbookController::class, 'getAllHandbook'])->name('get_all_handbook');
+    Route::get('/create-posts',[HandbookController::class, 'addNewPost']);
+    Route::post('/create', [HandbookController::class, 'store'])->name('create');
+    Route::get('/edit-post/{id}',[HandbookController::class,'editPost'])->name('edit_post');
+    Route::put('/update',[HandbookController::class,'update'])->name('update');
+    Route::delete('/delete-post/{id}', [HandbookController::class, 'delete'])->name('delete');
 });

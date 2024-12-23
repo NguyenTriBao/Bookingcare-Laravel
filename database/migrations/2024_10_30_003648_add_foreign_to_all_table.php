@@ -31,7 +31,7 @@ return new class extends Migration
             $table->foreign('doctorId')->references('doctorId')->on('doctors')->onDelete('cascade')->onUpdate('cascade'); // Liên kết khóa ngoại
         });
         Schema::table('handbooks', function (Blueprint $table) {
-            $table->foreign('author')->references('doctorId')->on('doctors')->onDelete('cascade')->onUpdate('cascade'); // Ràng buộc khóa ngoại
+            $table->foreign('author')->references('userId')->on('users')->onDelete('cascade')->onUpdate('cascade'); // Ràng buộc khóa ngoại
         });
     }
     public function down()

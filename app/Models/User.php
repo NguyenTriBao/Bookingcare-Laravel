@@ -19,4 +19,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Doctor::class, 'doctorId', 'id'); // id là khóa chính trong bảng users
     }
+    public function handbooks()
+    {
+        return $this->hasMany(Handbook::class, 'author', 'id'); // id là khóa chính trong bảng users
+    }
 }

@@ -52,6 +52,7 @@
                 <a href="/404" class="dropdown-item {{ Request::is('404') ? 'active' : '' }}">404 Page</a>
             </div>
         </div>
+        <a href="/news" class="nav-item nav-link {{ Request::is('posts') ? 'active' : '' }}">News</a>
         <a href="/contact" class="nav-item nav-link {{ Request::is('contact') ? 'active' : '' }}">Contact</a>
     </div>
     <a href="/appointment" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
