@@ -41,3 +41,4 @@ Route::get('/about',[DoctorController::class,'getAllDOctorAbout']);
 
 //News
 Route::get('/news',[HandbookController::class, 'getallPosts']);
+Route::get('/news/{id}',[HandbookController::class, 'getOnePostById']);

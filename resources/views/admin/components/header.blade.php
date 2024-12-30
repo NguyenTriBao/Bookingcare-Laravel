@@ -167,6 +167,10 @@
                         aria-expanded="false"><i class="far fa-newspaper"></i><span class="hide-menu">Posts</span></a>
                 </li>
                 <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/appointments"
+                        aria-expanded="false"><i class="fas fa-calendar-check"></i><span class="hide-menu">Appointments</span></a>
+                </li>
+                <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/charts"
                         aria-expanded="false"><i class="mdi mdi-chart-bar"></i><span class="hide-menu">Charts</span></a>
                 </li>

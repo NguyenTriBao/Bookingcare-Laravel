@@ -29,7 +29,7 @@ class DoctorController extends Controller
     }
 
     //Get all doctors
-    public function getAllDoctors($view)
+    private function getAllDoctors($view)
     {
     $doctors = Doctor::with('user')->whereHas('user', function($query) {
         $query->where('roleId', 'R2'); // Lọc theo roleId của user

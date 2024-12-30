@@ -13,17 +13,19 @@
         <div class="row g-4 news-container">
             @foreach($posts as $post)
             <div class="news-card">
-            <img src="{{ asset('storage/' . $post->image) }}" alt="">
+                <a href="/news/{{$post->id}}">
+                <img src="{{ asset('storage/' . $post->image) }}" alt="">
                 <h3 class="news-title">{{$post->title}}</h3>
                 <p class="news-description">
                     {{$post->description}}
                 </p>
                 <div class="news-meta">
-                    <span class="author">bởi Admin</span>
-                    <span class="date">Cập nhật 11-12-2024</span>
+                    <span class="author">Bởi {{$post->user->firstName}} {{$post->user->lastName}}</span>
+                    <span class="date">Cập nhật
+                        {{ $post->updated_at ? $post->updated_at->format('d/m/Y') : 'Không rõ' }}</span>
                 </div>
+                </a>
             </div>
-
             @endforeach
         </div>
     </div>

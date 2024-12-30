@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HandbookController;
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -84,4 +85,9 @@ Route::prefix('posts')->middleware(['auth', AdminMiddleware::class])->group(func
     Route::get('/edit-post/{id}',[HandbookController::class,'editPost'])->name('edit_post');
     Route::put('/update',[HandbookController::class,'update'])->name('update');
     Route::delete('/delete-post/{id}', [HandbookController::class, 'delete'])->name('delete');
+});
+
+//Appointments
+Route::prefix('appointments')->midđleware(['auth', AdminMiddleware::class])->group(function (){
+    Route::get('/', [ScheduleController::class, 'index'])->name('index');
 });

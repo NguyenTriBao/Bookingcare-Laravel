@@ -13,6 +13,6 @@ class Handbook extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'UserId', 'id'); // doctorId là khóa ngoại trong bảng users
+        return $this->belongsTo(User::class, 'author', 'id'); // doctorId là khóa ngoại trong bảng users
     }
 }
