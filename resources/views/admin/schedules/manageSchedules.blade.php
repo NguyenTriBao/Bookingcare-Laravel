@@ -59,15 +59,11 @@
                                 </h5>
                                 <div class="comment-footer">
                                     <span class="text-muted float-end">{{$doctor['create_at']}}</span>
-                                    <a href="{{ URL::to('/doctors/edit-doctor/'. $doctor->doctorId) }}">
+                                    <a href="{{ URL::to('/schedules/edit-schedules/'. $doctor->doctorId) }}">
                                         <button type="button" class="btn btn-cyan btn-sm text-white">
-                                            Edit
+                                            View Schedules from Doctor
                                         </button>
                                     </a>
-                                    <a href="#" data-id="{{ $doctor['id'] }}" onclick="deleteDoctor(this)">
-                                        <button type="button" class="btn btn-danger btn-sm text-white">
-                                            Delete
-                                        </button>
                                 </div>
                             </div>
                         </div>
@@ -88,27 +84,5 @@
     <!-- ============================================================== -->
     <!-- ============================================================== -->
     <script>
-    function deleteDoctor(element) {
-        let id = element.getAttribute('data-id'); // Lấy giá trị từ thuộc tính data-id;
-        if (confirm('Are you sure you want to delete this doctor?')) {
-            $.ajax({
-                url: '/doctors/delete-doctor/' + id,
-                type: 'DELETE',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
-                    // Nếu muốn xóa ngay khỏi giao diện mà không reload:
-                    location.reload();
-                },
-                error: function(xhr, status, error) {
-                    alert('Error deleting Specialty');
-                }
-            });
-        } else {
-            // If user cancels the action
-            alert('Delete action has been canceled.');
-        }
-    }
     </script>
     @endsection

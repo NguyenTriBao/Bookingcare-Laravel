@@ -167,8 +167,8 @@
                         aria-expanded="false"><i class="far fa-newspaper"></i><span class="hide-menu">Posts</span></a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/appointments"
-                        aria-expanded="false"><i class="fas fa-calendar-check"></i><span class="hide-menu">Appointments</span></a>
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/schedules"
+                        aria-expanded="false"><i class="fas fa-calendar-check"></i><span class="hide-menu">Schedules</span></a>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/charts"

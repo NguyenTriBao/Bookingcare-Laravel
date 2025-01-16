@@ -141,9 +141,9 @@
                                 <div class="col-md-9">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="validatedCustomFile" required
-                                            name="image" />
-                                        <label class="custom-file-label" for="validatedCustomFile">Choose
-                                            file...</label>
+                                            name="image"  onchange="previewImage(event)" />
+                                            <img id="preview" src=""
+                                            alt="" width="100" class="rounded-circle mt-2" />   
                                     </div>
                                 </div>
                             </div>
@@ -176,6 +176,16 @@
     <!-- ============================================================== -->
 
     <script>
+    function previewImage(event) {
+        const input = event.target;
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('preview').src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
     const easyMDE = new EasyMDE({
         element: document.getElementById('markdown-editor'),
         placeholder: "Viết nội dung Markdown tại đây...",

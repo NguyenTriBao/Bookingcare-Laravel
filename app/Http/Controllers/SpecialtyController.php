@@ -23,9 +23,15 @@ class SpecialtyController extends Controller
         return view('clients.detail-specialty', compact('specialty'));
     }
     //Get all Specialties
-    public function getAllSpecialty(){
+    public function getAllSpecialties($view){
         $specialties = Specialty::get();
-        return view('admin.specialty.specialtyManagement')->with('specialties', $specialties);
+        return view($view)->with('specialties', $specialties);
+    }
+    public function getAllSpecialty(){
+        return $this->getAllSpecialties('admin.specialty.specialtyManagement');
+    }
+    public function service(){
+        return $this->getAllSpecialties('clients.service');
     }
     //Get 1 Specialty
     public function editSpecialty($id){

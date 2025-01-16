@@ -14,7 +14,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Markdown -->
     <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
-    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
     @yield('title')
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('backend/assets/images/favicon.png')}}" />
@@ -22,6 +21,8 @@
     <link href="{{asset('backend/assets/libs/flot/css/float-chart.css')}}" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="{{asset('backend/dist/css/style.min.css')}}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/perfect-scrollbar/1.5.5/css/perfect-scrollbar.min.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -65,6 +66,12 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/perfect-scrollbar/1.5.5/perfect-scrollbar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 
     <script src="{{asset('backend/assets/libs/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap tether Core JavaScript -->
@@ -80,6 +87,7 @@
     <!--This page JavaScript -->
     <!-- <script src="{{asset('backend/dist/js/pages/dashboards/dashboard1.js')}}"></script> -->
     <!-- Charts js Files -->
+
     <script src="{{asset('backend/assets/libs/flot/excanvas.js')}}"></script>
     <script src="{{asset('backend/assets/libs/flot/jquery.flot.js')}}"></script>
     <script src="{{asset('backend/assets/libs/flot/jquery.flot.pie.js')}}"></script>
@@ -88,77 +96,7 @@
     <script src="{{asset('backend/assets/libs/flot/jquery.flot.crosshair.js')}}"></script>
     <script src="{{asset('backend/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js')}}"></script>
     <script src="{{asset('backend/dist/js/pages/chart/chart-page-init.js')}}"></script>
-    <script>
-    // Basic Example with form
-    var form = $("#example-form");
-    form.validate({
-        errorPlacement: function errorPlacement(error, element) {
-            element.before(error);
-        },
-        rules: {
-            confirm: {
-                equalTo: "#password",
-            },
-        },
-    });
-    form.children("div").steps({
-        headerTag: "h3",
-        bodyTag: "section",
-        transitionEffect: "slideLeft",
-        onStepChanging: function(event, currentIndex, newIndex) {
-            form.validate().settings.ignore = ":disabled,:hidden";
-            return form.valid();
-        },
-        onFinishing: function(event, currentIndex) {
-            form.validate().settings.ignore = ":disabled";
-            return form.valid();
-        },
-        onFinished: function(event, currentIndex) {
-            alert("Submitted!");
-        },
-    });
-    </script>
-    <script>
-    //***********************************//
-    // For select 2
-    //***********************************//
-    $(".select2").select2();
-
-    /*colorpicker*/
-    $(".demo").each(function() {
-        //
-        // Dear reader, it's actually very easy to initialize MiniColors. For example:
-        //
-        //  $(selector).minicolors();
-        //
-        // The way I've done it below is just for the demo, so don't get confused
-        // by it. Also, data- attributes aren't supported at this time...they're
-        // only used for this demo.
-        //
-        $(this).minicolors({
-            control: $(this).attr("data-control") || "hue",
-            position: $(this).attr("data-position") || "bottom left",
-
-            change: function(value, opacity) {
-                if (!value) return;
-                if (opacity) value += ", " + opacity;
-                if (typeof console === "object") {
-                    console.log(value);
-                }
-            },
-            theme: "bootstrap",
-        });
-    });
-    /*datwpicker*/
-    jQuery(".mydatepicker").datepicker();
-    jQuery("#datepicker-autoclose").datepicker({
-        autoclose: true,
-        todayHighlight: true,
-    });
-    var quill = new Quill("#editor", {
-        theme: "snow",
-    });
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.min.js"></script>
 </body>
 
 </html>

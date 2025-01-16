@@ -98,7 +98,6 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    // Nếu muốn xóa ngay khỏi giao diện mà không reload:
                     location.reload();
                 },
                 error: function(xhr, status, error) {

@@ -88,6 +88,8 @@ Route::prefix('posts')->middleware(['auth', AdminMiddleware::class])->group(func
 });
 
 //Appointments
-Route::prefix('appointments')->midđleware(['auth', AdminMiddleware::class])->group(function (){
+Route::prefix('schedules')->middleware(['auth', AdminMiddleware::class])->group(function (){
     Route::get('/', [ScheduleController::class, 'index'])->name('index');
+    Route::get('/edit-schedules/{id}',[ScheduleController::class, 'edit']);
+    Route::post('/create',[ScheduleController::class, 'create'])->name('schedules.create');
 });

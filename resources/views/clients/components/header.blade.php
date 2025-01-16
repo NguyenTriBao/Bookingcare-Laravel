@@ -45,7 +45,6 @@
         <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
             <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-                <a href="/feature" class="dropdown-item {{ Request::is('feature') ? 'active' : '' }}">Feature</a>
                 <a href="/team" class="dropdown-item {{ Request::is('team') ? 'active' : '' }}">Our Doctor</a>
                 <a href="/appointment" class="dropdown-item {{ Request::is('appointment') ? 'active' : '' }}">Appointment</a>
                 <a href="/testimonial" class="dropdown-item {{ Request::is('testimonial') ? 'active' : '' }}">Testimonial</a>
