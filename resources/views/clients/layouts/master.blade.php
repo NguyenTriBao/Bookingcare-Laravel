@@ -24,7 +24,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="{{ asset('/frntend/lib/animate/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/fontend/lib/animate/animate.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/fontend/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/fontend/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" />
 
@@ -33,6 +33,9 @@
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('/fontend/css/style.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 </head>
 
 
@@ -41,7 +44,7 @@
     @yield('content')
     @include('clients.components.footer')
 
-
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 

@@ -19,7 +19,7 @@ class SpecialtyController extends Controller
 
     //Get 1 Specialty
     public function detail ($id){
-        $specialty = Specialty::with(['doctors.user'])->find($id);
+        $specialty = Specialty::with(['doctors.user', 'doctors.schedules'])->find($id);
         return view('clients.detail-specialty', compact('specialty'));
     }
     //Get all Specialties

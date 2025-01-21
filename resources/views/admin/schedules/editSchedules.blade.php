@@ -69,7 +69,7 @@
         </div>
         <div class="border-top">
             <div class="card-body text-end">
-                <button type="button" class="btn btn-primary" id="btn-create" onclick="deleteDoctor(this)">
+                <button type="button" class="btn btn-primary" id="btn-create" onclick="createSchedule(this)">
                     Tạo Lịch Khám
                 </button>
             </div>
@@ -101,20 +101,22 @@
                 @foreach($groupedData as $date => $times)
                 <?php
                      // Định dạng ngày sang d-m-Y
-    $formattedDate = DateTime::createFromFormat('Y-m-d', $date)->format('d-m-Y');
-    echo "<strong>Ngày: $formattedDate</strong><br>";?>
-                Giờ:
-                @foreach($times as $time)
-                <button>{{$time}}</button>
-                @endforeach
-                <br><br>
+                $formattedDate = DateTime::createFromFormat('Y-m-d', $date)->format('d-m-Y');
+                $today = date("Y-m-d");
+                if($formattedDate > $today){
+                    echo "<strong>Ngày: $formattedDate</strong><br>";
+                    Giờ:
+                    foreach($times as $time){
+                    echo "<button class='btn-schedule'> $time </button>  <br><br>";
+                    }
+                }?>
                 @endforeach
             </div>
         </div>
     </div>
 
     <script>
-    function deleteDoctor(element) {
+    function createSchedule(element) {
         let date = $('#appointment_datetime').val();
         let doctorId = $('#doctorId').val();
         let _commentUrl = "/schedules/create";
@@ -139,6 +141,9 @@
             },
             error: function(xhr, status, error) {
                 // Xử lý lỗi
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    alert('Lỗi: ' + xhr.responseJSON.error); // Hiển thị lỗi từ $e->getMessage()
+                }
                 console.error(xhr.responseText);
                 alert('Đã xảy ra lỗi khi tạo lịch khám. Vui lòng thử lại.');
             }

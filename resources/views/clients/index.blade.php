@@ -200,12 +200,7 @@
                         <img class="img-fluid img-fixed" src="{{ asset('storage/' . $doctor->image) }}" alt="#">
                     </div>
                     <div class="team-text bg-light text-center p-4">
-                        <h5>{{$doctor->user['lastName']}} {{$doctor->user['firstName']}} Doctor</h5>
-                        <div class="team-social text-center">
-                            <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>
-                        </div>
+                    <h5 ><a class="text-dark" href="/detail-doctor/{{$doctor['doctorId']}}">{{$doctor->user['lastName']}} {{$doctor->user['firstName']}} Doctor</a></h5>
                     </div>
                 </div>
             </div>

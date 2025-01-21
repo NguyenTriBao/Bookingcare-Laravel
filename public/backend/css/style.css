@@ -1,0 +1,9 @@
+.btn-schedule{
+    background: red;
+    border: none;
+    padding: 5px;
+    margin: 0 5px;
+    width: 50px;
+    border-radius: 10%;
+    color: #d9d9d9;
+}

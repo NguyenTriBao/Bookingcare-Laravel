@@ -15,4 +15,8 @@ class Doctor extends Model
     {
         return $this->belongsTo(User::class, 'doctorId', 'id'); // doctorId là khóa ngoại trong bảng users
     }
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class, 'doctorId', 'doctorId'); // id là khóa chính trong bảng users
+    }
 }

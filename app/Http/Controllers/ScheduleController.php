@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\Schedule;
+use App\Http\Requests\ScheduleRequest;
 
 class ScheduleController extends Controller
 {
@@ -27,16 +28,13 @@ class ScheduleController extends Controller
         $schedules = $this->schedule->where('doctorId', $id)->get();
        return view('admin.schedules.editSchedules', compact('doctor','schedules'));
     }
-    public function create(Request $request){
-        $date = $request->input('date');
-        $doctorId = $request->input('doctorId');
-        if(!$date || !$doctorId){
-            return response()->json(['error' => 'Thiếu thông tin!'], 400);
-        }
-        $this->schedule->create([
-            'date' => $date,
-            'doctorId' => $doctorId
-        ]);
-        return response()->json(['message' => 'Tạo lịch khám thành công!']);
+    public function create(ScheduleRequest $request) {
+            // Code xử lý tạo lịch khám
+            $this->schedule->create([
+                'date' => $request->input('date'),
+                'doctorId' => $request->input('doctorId'),
+            ]);
+            return response()->json(['message' => 'Tạo lịch khám thành công!'], 200);
     }
+    
 }
