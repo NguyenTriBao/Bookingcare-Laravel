@@ -8,6 +8,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
     <link href="{{ asset('/fontend/img/favicon.ico') }}" rel="icon">
@@ -44,6 +45,7 @@
     @yield('content')
     @include('clients.components.footer')
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -63,7 +65,7 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('/fontend/js/main.js') }}"></script>
-
+    
 </body>
 
 </html>

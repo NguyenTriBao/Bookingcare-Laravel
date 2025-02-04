@@ -95,22 +95,25 @@
                         $groupedData[$date] = []; // Tạo mảng mới cho ngày chưa có
                     }
                     $groupedData[$date][] = $time; // Thêm giờ vào ngày tương ứng
+
                     ?>
                 @endforeach
 
                 @foreach($groupedData as $date => $times)
                 <?php
-                     // Định dạng ngày sang d-m-Y
+                // Định dạng ngày sang d-m-Y
                 $formattedDate = DateTime::createFromFormat('Y-m-d', $date)->format('d-m-Y');
-                $today = date("Y-m-d");
-                if($formattedDate > $today){
+                // chuyển định dạng date sang INT
+                $today = strtotime(date("Y-m-d"));
+                $timestamp = strtotime($formattedDate);
+                if($timestamp >= $today){
                     echo "<strong>Ngày: $formattedDate</strong><br>";
                     Giờ:
                     foreach($times as $time){
                     echo "<button class='btn-schedule'> $time </button>  <br><br>";
                     }
                 }?>
-                @endforeach
+                 @endforeach
             </div>
         </div>
     </div>

@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SpecialtyController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HandbookController;
+use App\Http\Controllers\ScheduleController;
 
 Route::get('/',[HomeController::class, 'show']);
 
@@ -39,3 +40,6 @@ Route::get('/about',[DoctorController::class,'getAllDOctorAbout']);
 //News
 Route::get('/news',[HandbookController::class, 'getallPosts']);
 Route::get('/news/{id}',[HandbookController::class, 'getOnePostById']);
+
+//Booking
+Route::post('/bookingschedule',[ScheduleController::class, 'booking']);
