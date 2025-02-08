@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('patientId');
            
             $table->string('price');
-            $table->string('date');
-            $table->string('note');
+            $table->string('result');
+            $table->string('note_patient');
             $table->timestamps();
         });
     }
