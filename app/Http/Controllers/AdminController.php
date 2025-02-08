@@ -34,23 +34,25 @@ class AdminController extends Controller
     }
     //login
     public function login(Request $request) {
-        $user = \App\Models\User::where('email', $request->email)->first();
-    
-        if ($user && Hash::check($request->password, $user->password)) {
-            Auth::login($user);
-    
-            // Chuyển hướng tùy theo vai trò
-            switch ($user->roleId) {
-                case 'R1': // Admin
-                    return redirect()->to('/dashboard');
-                case 'R2': // Doctor
-                    return redirect()->to('/dashboard');
-                default:
-                    Auth::logout();
-                    return back()->with('error', 'Vai trò không hợp lệ.');
+        $user = $this->user->where('email', $request->email)->first();
+        if($user->roleId === 'R3'){
+            return back()->with('error', 'Email hoặc mật khẩu không chính xác');
+        }
+        else{
+            if ($user && Hash::check($request->password, $user->password)) {
+                Auth::login($user);
+                // Chuyển hướng tùy theo vai trò
+                switch ($user->roleId) {
+                    case 'R1': // Admin
+                        return redirect()->to('/dashboard');
+                    case 'R2': // Doctor
+                        return redirect()->to('/dashboard');
+                    default:
+                        Auth::logout();
+                        return back()->with('error', 'Vai trò không hợp lệ.');
+                }
             }
         }
-    
         return back()->with('error', 'Email hoặc mật khẩu không chính xác');
     }
     

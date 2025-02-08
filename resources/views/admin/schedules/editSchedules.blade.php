@@ -95,7 +95,6 @@
                         $groupedData[$date] = []; // Tạo mảng mới cho ngày chưa có
                     }
                     $groupedData[$date][] = $time; // Thêm giờ vào ngày tương ứng
-
                     ?>
                 @endforeach
 
@@ -110,12 +109,47 @@
                     echo "<strong>Ngày: $formattedDate</strong><br>";
                     Giờ:
                     foreach($times as $time){
-                    echo "<button class='btn-schedule'> $time </button>  <br><br>";
+                        $checked = false;
+                        foreach($appointments as $appointment){
+                            $dateAppointments = explode(' ', $appointment->time);
+                            $appointmentDate = $dateAppointments[0];
+                            $appointmentTime = $dateAppointments[1];
+                            //echo $date . ' and ' . $appointmentDate;
+                            if($date == $dateAppointments[0] && $dateAppointments[1] == $time){
+                                $checked = true;
+                                $reason = $appointment->note;
+                                break;
+
+                            }
+
+                        }
+                        if($checked == true){
+                            foreach($patients as $patient){
+                                if($appointment->patientId == $patient->id){
+                                    echo "<button 
+                                        data-name='$patient->lastName'
+                                        data-email='$patient->email'
+                                        data-address='$patient->address'
+                                        data-phoneNumber='$patient->phoneNumber'
+                                        data-gender='$patient->gender'
+                                        data-reason='$reason'
+                                        data-date='$appointment' style='background: green;' class='btn-schedule btn-checked'> $time </button>
+                                    ";
+                                }
+                            }
+                        }
+                        else{
+                           echo "<button class='btn-schedule'> $time </button>";
+                        }
                     }
+                    echo "<br><br>";
                 }?>
-                 @endforeach
+
+                @endforeach
             </div>
         </div>
+
+        <input type="hidden" id="fullName" value>
     </div>
 
     <script>
@@ -162,6 +196,66 @@
             maxDate: new Date().fp_incr(14), // Giới hạn tối đa 14 ngày
             minuteIncrement: 30 // Chỉ cho phép chọn phút 00 hoặc 30
 
+        });
+    });
+
+    document.querySelectorAll('.btn-checked').forEach(button => {
+        button.addEventListener('click', () => {
+            const time = button.getAttribute('data-date');
+            let fullName = button.getAttribute('data-name');
+            let email = button.getAttribute('data-email');
+            let address = button.getAttribute('data-address');
+            let phoneNumber = button.getAttribute('data-phoneNumber');
+            let gender = button.getAttribute('data-gender');
+            let sex;
+            switch (gender) {
+             
+                case 'M':
+                    sex = 'Male';
+                    break;
+                case 'F':
+                    sex = 'Female';
+                    break;
+                default:
+                    sex = 'Other';
+                    break;
+            }
+            let reason = button.getAttribute('data-reason');
+
+            Swal.fire({
+                title: 'Thông tin bệnh nhân',
+                html: `
+            <div class="form-container">
+                    <div class="form-group">
+                        <label for="name">Họ và Tên:</label>
+                        <label for="name">${fullName}</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <label for="email">${email}</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Địa chỉ:</label>
+                        <label for="name">${address}</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="phonenumber">Số điện thoại:</label>
+                        <label for="name">${phoneNumber}</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Giới tính:</label>
+                        <label for="name">${sex}</label>
+                    </div>
+                     <div class="form-group">
+                        <label>Lý do khám:</label>
+                        <textarea name="reason" id="reason" readonly>${reason}</textarea>
+                    </div>
+            </div>
+            `,
+                showCancelButton: true,
+                confirmButtonText: 'In hoá đơn',
+                cancelButtonText: 'Hủy',
+            });
         });
     });
     </script>

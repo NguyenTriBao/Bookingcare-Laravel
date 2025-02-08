@@ -24,14 +24,24 @@ class ScheduleController extends Controller
         $doctors = $this->doctor->get();
         return view('admin.schedules.manageSchedules', compact('doctors'));
     }
+
+    // Get Infor 1 Doctor 
     public function edit($id){
         $doctor = Doctor::with('user')
         ->whereHas('user', function($query) use ($id) {
             $query->where('doctorId', $id); // Lọc theo id của user
         })->first();;
         $schedules = $this->schedule->where('doctorId', $id)->get();
-       return view('admin.schedules.editSchedules', compact('doctor','schedules'));
+        $appointments = $this->appointment->where('doctorId', $id)->get();
+       // Lấy danh sách tất cả `patientId` từ các cuộc hẹn
+        $patientIds = $appointments->pluck('patientId')->toArray();
+
+        // Lấy thông tin bệnh nhân dựa trên danh sách `patientId`
+        $patients = User::whereIn('id', $patientIds)->get();
+        return view('admin.schedules.editSchedules', compact('doctor','schedules','appointments','patients'));
     }
+
+    //Create 1 Schedule
     public function create(ScheduleRequest $request) {
             // Code xử lý tạo lịch khám
             $this->schedule->create([
@@ -40,6 +50,8 @@ class ScheduleController extends Controller
             ]);
             return response()->json(['message' => 'Tạo lịch khám thành công!'], 200);
     }
+
+    //Patient Booking a appointment
     public function booking(Request $request){
         //Create Patient
         $patient =  $this->user->create([
