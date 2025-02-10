@@ -1,5 +1,6 @@
 @extends('admin.layouts.master')
 @section('content')
+session_start();
 <!-- ============================================================== -->
 <!-- ============================================================== -->
 <!-- Page wrapper  -->
@@ -127,6 +128,8 @@
                             foreach($patients as $patient){
                                 if($appointment->patientId == $patient->id){
                                     echo "<button 
+                                        data-patientId='$patient->id'
+                                        data-doctorId='{$doctor->user['id']}'
                                         data-name='$patient->lastName'
                                         data-email='$patient->email'
                                         data-address='$patient->address'
@@ -148,8 +151,6 @@
                 @endforeach
             </div>
         </div>
-
-        <input type="hidden" id="fullName" value>
     </div>
 
     <script>
@@ -202,6 +203,8 @@
     document.querySelectorAll('.btn-checked').forEach(button => {
         button.addEventListener('click', () => {
             const time = button.getAttribute('data-date');
+            let patientId = button.getAttribute('data-patientId');
+            let doctorId = button.getAttribute('data-doctorId');
             let fullName = button.getAttribute('data-name');
             let email = button.getAttribute('data-email');
             let address = button.getAttribute('data-address');
@@ -209,7 +212,6 @@
             let gender = button.getAttribute('data-gender');
             let sex;
             switch (gender) {
-             
                 case 'M':
                     sex = 'Male';
                     break;
@@ -222,6 +224,17 @@
             }
             let reason = button.getAttribute('data-reason');
 
+            const patientData = {
+                time : time,
+                patientId: patientId,
+                doctorId: doctorId,
+                fullName: fullName,
+                email: email,
+                address: address,
+                phoneNumber: phoneNumber,
+                sex: sex,
+                reason: reason
+            };
             Swal.fire({
                 title: 'Thông tin bệnh nhân',
                 html: `
@@ -255,6 +268,32 @@
                 showCancelButton: true,
                 confirmButtonText: 'In hoá đơn',
                 cancelButtonText: 'Hủy',
+            }).then(result => {
+                if (result.isConfirmed) {
+                    // Gửi thông tin qua AJAX (nếu cần)
+                    fetch('/schedules/storePatient', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector(
+                                    'meta[name="csrf-token"]').getAttribute('content')
+                            },
+                            body: JSON.stringify(
+                                patientData
+                            )
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                window.location.href = '/schedules/issue-invoice';
+                            } else {
+                                Swal.fire('Lỗi', data.error || 'Có lỗi xảy ra.', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire('Lỗi', 'Không thể kết nối tới server.', 'error');
+                        });
+                }
             });
         });
     });

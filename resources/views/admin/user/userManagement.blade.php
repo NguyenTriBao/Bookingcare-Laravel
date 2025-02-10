@@ -62,6 +62,7 @@
                         </div>
                         @endforeach
                         <!-- Comment Row -->
+                        {!! $users->links() !!}
                     </div>
                 </div>
             </div>

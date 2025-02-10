@@ -20,7 +20,7 @@ class UserController extends Controller
     }
     //Get user
     public function getAllUsers(){
-        $users = $this->user->all();
+        $users = $this->user->paginate(10);
         return view('admin.user.userManagement')->with('users', $users);
     }
     //Delete User

@@ -181,21 +181,6 @@ document.querySelectorAll('.btn-schedule').forEach(button => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
     // Lấy ngày hôm nay theo định dạng YYYY-MM-DD
     let today = new Date().toISOString().split('T')[0];

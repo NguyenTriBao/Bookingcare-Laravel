@@ -92,4 +92,8 @@ Route::prefix('schedules')->middleware(['auth', AdminMiddleware::class])->group(
     Route::get('/', [ScheduleController::class, 'index'])->name('index');
     Route::get('/edit-schedules/{id}',[ScheduleController::class, 'edit']);
     Route::post('/create',[ScheduleController::class, 'create'])->name('schedules.create');
+
+
+    Route::post('/storePatient', [ScheduleController::class, 'storePatient']);
+    Route::get('/issue-invoice', [ScheduleController::class, 'issueInvoice']);
 });

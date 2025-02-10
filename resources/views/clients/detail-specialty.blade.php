@@ -43,7 +43,7 @@
             <h5>ĐỊA CHỈ KHÁM</h5>
             <p>Phòng khám Spinetech Clinic</p>
             <p>Tòa nhà GP, 257 Giải Phóng, Phương Mai, Đống Đa, Hà Nội</p>
-            <h5>GIÁ KHÁM: 500.000đ <a href="#">Xem chi tiết</a></h5>
+            <h5>GIÁ KHÁM: 150.000đ <a href="/detail-doctor/{{$doctor->doctorId}}">Xem chi tiết</a></h5>
         </div>
     </div>
 

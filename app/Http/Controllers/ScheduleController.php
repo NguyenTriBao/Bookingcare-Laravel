@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+session_start();
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\Schedule;
@@ -72,5 +72,19 @@ class ScheduleController extends Controller
             'note' => $request->reason
         ]);
         return response()->json(['success' => true, 'message' => 'Đăng ký khám bệnh thành công'], 200);
+    }
+
+    //Store Patient
+    public function storePatient(Request $request){
+        $_SESSION['patientData'] = $request->all();
+        return response()->json(['success' => true]);
+    }
+
+    public function issueInvoice(){
+        if (!$_SESSION['patientData']) {
+            return redirect('/')->with('error', 'Không tìm thấy dữ liệu bệnh nhân.');
+        }
+
+        return view('admin.schedules.issue-invoice', ['patient' => $_SESSION['patientData']]);
     }
 }
