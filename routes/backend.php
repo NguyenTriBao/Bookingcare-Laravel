@@ -45,6 +45,8 @@ Route::middleware('auth')->group(function () {
 Route::prefix('admin')->group(function (){
     Route::post('/login',[AdminController::class, 'login'])->name('login');
     Route::get('/logout',[AdminController::class, 'logout'])->name('logout');
+    Route::post('/recoverPassword',[AdminController::class, 'recover'])->name('recover');
+    Route::post('/change-password',[AdminController::class, 'changePassword'])->name('changePassword');
 });
 
 //DOCTORS

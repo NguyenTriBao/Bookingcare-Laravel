@@ -56,11 +56,43 @@ class AdminController extends Controller
         return back()->with('error', 'Email hoặc mật khẩu không chính xác');
     }
     
-    
     //logout
     public function logout()
     {
         Auth::logout();
         return redirect('/admin');
+    }
+
+    //Recover Password
+    public function recover(Request $request){
+        $doctor = $this->user
+        ->where('email', $request->email)
+        ->where(function ($query) {
+            $query->where('roleId', 'R1')->orWhere('roleId', 'R2');
+        })
+        ->first();
+        if($doctor){
+            if($doctor->email == $request->email){
+                return view('admin.change-password',compact('doctor'));
+            }
+        }
+        else{
+            return back()->with('error','Vai trò không hợp lệ');
+        }
+    }
+
+    //Change Password
+    public function changePassword(Request $request){
+        if($request->newPassword === $request->confirmPassword){
+            $doctor = $this->user
+            ->where('email', $request->email)->first();
+            $doctor->update([
+                'password' =>  Hash::make($request->newPassword)
+            ]);
+            return redirect()->route('login');
+        }
+        else{
+            return back()->with('error','Mật khẩu nhập lại không trùng khớp');
+        }
     }
 }

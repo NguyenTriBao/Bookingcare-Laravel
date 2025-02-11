@@ -47,17 +47,22 @@
                         {{ session('error') }}
                     </div>
                     @endif
-                    <form class="form-horizontal mt-3" action="/admin/login" method="POST">
+                    <form class="form-horizontal mt-3" action="/admin/change-password" method="POST">
                         @csrf
                         <div class="row pb-4">
                             <div class="col-12">
+                            <div class="input-group mb-3">
+                                    <input type="hidden" name="email" class="form-control form-control-lg"
+                                        placeholder="New Password" aria-label="Password" aria-describedby="basic-addon1"
+                                        value="{{$doctor->email}}" />
+                                </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text bg-success text-white h-100" id="basic-addon1"><i
-                                                class="mdi mdi-account fs-4"></i></span>
+                                        <span class="input-group-text bg-warning text-white h-100" id="basic-addon2"><i
+                                                class="mdi mdi-lock fs-4"></i></span>
                                     </div>
-                                    <input type="email" name="email" class="form-control form-control-lg"
-                                        placeholder="Email" aria-label="Username" aria-describedby="basic-addon1"
+                                    <input type="password" name="newPassword" class="form-control form-control-lg"
+                                        placeholder="New Password" aria-label="Password" aria-describedby="basic-addon1"
                                         required />
                                 </div>
                                 <div class="input-group mb-3">
@@ -65,9 +70,9 @@
                                         <span class="input-group-text bg-warning text-white h-100" id="basic-addon2"><i
                                                 class="mdi mdi-lock fs-4"></i></span>
                                     </div>
-                                    <input type="password" name="password" class="form-control form-control-lg"
-                                        placeholder="Password" aria-label="Password" aria-describedby="basic-addon1"
-                                        required />
+                                    <input type="password" name="confirmPassword" class="form-control form-control-lg"
+                                        placeholder="Confirmation Password" aria-label="Password"
+                                        aria-describedby="basic-addon1" required />
                                 </div>
                             </div>
                         </div>
@@ -75,48 +80,14 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <div class="pt-3">
-                                        <button class="btn btn-info" id="to-recover" type="button">
-                                            <i class="mdi mdi-lock fs-4 me-1"></i> Lost password?
-                                        </button>
                                         <button class="btn btn-success float-end text-white" type="submit">
-                                            Login
+                                            Change Password
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </form>
-                </div>
-                <div id="recoverform" style="display: none;">
-                    <div class="text-center">
-                        <span class="text-white">Enter your e-mail address below and we will send you
-                            instructions how to recover a password.</span>
-                    </div>
-                    <div class="row mt-3">
-                        <!-- Form -->
-                        <form class="col-12" action="/admin/recoverPassword" method="POST">
-                            @csrf
-                            <!-- email -->
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-danger text-white h-100" id="basic-addon1"><i
-                                            class="mdi mdi-email fs-4"></i></span>
-                                </div>
-                                <input type="text" class="form-control form-control-lg" placeholder="Email Address"
-                                    aria-label="Username" aria-describedby="basic-addon1" name="email" />
-                            </div>
-                            <!-- pwd -->
-                            <div class="row mt-3 pt-3 border-top border-secondary">
-                                <div class="col-12">
-                                    <a class="btn btn-success text-white" href="#" id="to-login" name="action">Back To
-                                        Login</a>
-                                    <button class="btn btn-info float-end" type="submit" name="action">
-                                        Recover
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
@@ -146,20 +117,6 @@
     <!-- This page plugin js -->
     <!-- ============================================================== -->
     <script>
-    // ==============================================================
-    // Login and Recover Password
-    // ==============================================================
-    $("#to-recover").on("click", function() {
-        $("#loginform").hide();
-        $("#recoverform").fadeIn();
-    });
-    $("#to-login").click(function() {
-        $("#recoverform").hide();
-        $("#loginform").fadeIn();
-    });
-    setTimeout(function() {
-        $('.alert').fadeOut('slow');
-    }, 5000); // 5 giây
     </script>
 </body>
 
