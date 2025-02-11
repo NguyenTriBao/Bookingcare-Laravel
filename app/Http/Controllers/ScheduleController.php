@@ -8,6 +8,7 @@ use App\Models\Schedule;
 use App\Models\User;
 use App\Models\Appointment;
 use App\Http\Requests\ScheduleRequest;
+use Illuminate\Support\Facades\Mail;
 
 class ScheduleController extends Controller
 {
@@ -86,5 +87,14 @@ class ScheduleController extends Controller
         }
 
         return view('admin.schedules.issue-invoice', ['patient' => $_SESSION['patientData']]);
+    }
+
+    public function sendEmailToPatient(Request $request){
+        $dataEmail = $request->all();
+       Mail::send('admin.schedules.form-issue-invoice', compact('dataEmail'), function($email) use($dataEmail){
+           $email->subject('BookingCare - Hoá đơn khám bênh');
+           $email->to($dataEmail['email'], $dataEmail['fullName']);   
+       });
+       return redirect()->route('edit-schedules',['id' => $dataEmail['doctorId']]);
     }
 }

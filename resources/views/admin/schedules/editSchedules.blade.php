@@ -136,7 +136,7 @@ session_start();
                                         data-phoneNumber='$patient->phoneNumber'
                                         data-gender='$patient->gender'
                                         data-reason='$reason'
-                                        data-date='$appointment' style='background: green;' class='btn-schedule btn-checked'> $time </button>
+                                        data-date='$appointment->time' style='background: green;' class='btn-schedule btn-checked'> $time </button>
                                     ";
                                 }
                             }

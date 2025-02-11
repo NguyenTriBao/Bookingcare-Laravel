@@ -32,7 +32,7 @@ session_start();
     <!-- ============================================================== -->
     <!-- Container fluid  -->
     <!-- ============================================================== -->
-    <form id="create-schedule-form" role="form">
+    <form id="create-schedule-form" role="form" action='sendEmailToPatient' method='POST'>
         @csrf
         <div class="container-fluid">
             <!-- ============================================================== -->
@@ -51,7 +51,9 @@ session_start();
                                         value="{{$patient['patientId']}}" />
                                     <input type="hidden" class="form-control" name="doctorId"
                                         value="{{$patient['doctorId']}}" />
-                                    <input type="text" class="form-control" id="fname" disabled name="fname"
+                                        <input type="text" class="form-control" name="time"
+                                        value="{{$patient['time']}}" />
+                                    <input type="text" class="form-control" id="fname" readonly name="fullName"
                                         value="{{$patient['fullName']}}" />
                                 </div>
                             </div>
@@ -59,7 +61,7 @@ session_start();
                                 <label for="fname" class="col-sm-5 text-end control-label col-form-label">Email bệnh
                                     nhân: </label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="email" disabled name="email"
+                                    <input type="text" class="form-control" id="email" readonly name="email"
                                         value="{{$patient['email']}}" />
                                 </div>
                             </div>
@@ -67,7 +69,7 @@ session_start();
                                 <label for="fname" class="col-sm-5 text-end control-label col-form-label">Địa chỉ:
                                 </label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="address" disabled name="address"
+                                    <input type="text" class="form-control" id="address" readonly name="address"
                                         value="{{$patient['address']}}" />
                                 </div>
                             </div>
@@ -75,7 +77,7 @@ session_start();
                                 <label for="fname" class="col-sm-5 text-end control-label col-form-label">Giới tính:
                                 </label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="gender" disabled name="gender"
+                                    <input type="text" class="form-control" id="gender" readonly name="gender"
                                         value="{{$patient['sex']}}" />
                                 </div>
                             </div>
@@ -83,7 +85,7 @@ session_start();
                                 <label for="fname" class="col-sm-5 text-end control-label col-form-label">Số điện thoại:
                                 </label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="phoneNumber" disabled name="phoneNumber"
+                                    <input type="text" class="form-control" id="phoneNumber" readonly name="phoneNumber"
                                         value="{{$patient['phoneNumber']}}" />
                                 </div>
                             </div>
@@ -102,7 +104,7 @@ session_start();
                                     <textarea contenteditable="true" style="
                                     width: 100%;
                                     height: 100px"
-                                    name=" note" id="note" disabled>{{$patient['reason']}}</textarea>
+                                    name="note" id="note" readonly>{{$patient['reason']}}</textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -125,7 +127,7 @@ session_start();
         </div>
         <div class="border-top">
             <div class="card-body text-end">
-                <button type="button" class="btn btn-primary" id="btn-create" onclick="createSchedule(this)">
+                <button type="submit" class="btn btn-primary" id="btn-create">
                     Xuất hoá đơn
                 </button>
             </div>

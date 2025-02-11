@@ -90,10 +90,14 @@ Route::prefix('posts')->middleware(['auth', AdminMiddleware::class])->group(func
 //Appointments
 Route::prefix('schedules')->middleware(['auth', AdminMiddleware::class])->group(function (){
     Route::get('/', [ScheduleController::class, 'index'])->name('index');
-    Route::get('/edit-schedules/{id}',[ScheduleController::class, 'edit']);
+    Route::get('/edit-schedules/{id}',[ScheduleController::class, 'edit'])->name('edit-schedules');
     Route::post('/create',[ScheduleController::class, 'create'])->name('schedules.create');
 
 
     Route::post('/storePatient', [ScheduleController::class, 'storePatient']);
     Route::get('/issue-invoice', [ScheduleController::class, 'issueInvoice']);
+    Route::post('/sendEmailToPatient', [ScheduleController::class, 'sendEmailToPatient']);
+    Route::get('/form-issue-invoice', function(){
+        return view ('admin.schedules.form-issue-invoice');
+    });
 });
