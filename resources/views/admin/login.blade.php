@@ -102,7 +102,7 @@
                                 <div class="col-12">
                                     <a class="btn btn-success text-white" href="#" id="to-login" name="action">Back To
                                         Login</a>
-                                    <button class="btn btn-info float-end" type="button" name="action">
+                                    <button class="btn btn-info float-end" type="submit" name="action">
                                         Recover
                                     </button>
                                 </div>
