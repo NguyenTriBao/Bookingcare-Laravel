@@ -6,6 +6,7 @@ use App\Http\Controllers\SpecialtyController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HandbookController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/',[HomeController::class, 'show']);
 
@@ -43,3 +44,6 @@ Route::get('/news/{id}',[HandbookController::class, 'getOnePostById']);
 
 //Booking
 Route::post('/bookingschedule',[ScheduleController::class, 'booking']);
+
+//Contact
+Route::post('/send-contact', [ContactController::class, 'sendContact']);
