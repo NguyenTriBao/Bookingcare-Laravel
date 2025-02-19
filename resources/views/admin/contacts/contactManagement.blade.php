@@ -48,22 +48,19 @@
                     </div>
                     <div class="comment-widgets scrollable">
                         <!-- Comment Row -->
-                        @foreach($doctors as $doctor)
+                        @foreach($contacts as $contact)
                         <div class="d-flex flex-row comment-row mt-0">
-                            <div class="p-2">
-                                <img src="{{ asset('storage/' . $doctor->image) }}" alt="$doctor->image" width="50"
-                                    class="rounded-circle" />
-                            </div>
                             <div class="comment-text w-100">
-                                <h5 class="font-medium">{{$doctor->user['lastName']}} {{$doctor->user['firstName']}}
-                                </h5>
+                                <h5 class="font-medium">{{$contact->title}}</h5>
+                                <span class="mb-3 d-block">{{$contact->name}}
+                                </span>
                                 <div class="comment-footer">
-                                    <a href="{{ URL::to('/doctors/edit-doctor/'. $doctor->doctorId) }}">
+                                    <a href="/view-contact/{{$contact->id}}">
                                         <button type="button" class="btn btn-cyan btn-sm text-white">
-                                            Edit
+                                            View
                                         </button>
                                     </a>
-                                    <a href="#" data-id="{{ $doctor['id'] }}" onclick="deleteDoctor(this)">
+                                    <a href="#">
                                         <button type="button" class="btn btn-danger btn-sm text-white">
                                             Delete
                                         </button>
@@ -88,26 +85,5 @@
     <!-- ============================================================== -->
     <!-- ============================================================== -->
     <script>
-    function deleteDoctor(element) {
-        let id = element.getAttribute('data-id'); // Lấy giá trị từ thuộc tính data-id;
-        if (confirm('Are you sure you want to delete this doctor?')) {
-            $.ajax({
-                url: '/doctors/delete-doctor/' + id,
-                type: 'DELETE',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
-                    location.reload();
-                },
-                error: function(xhr, status, error) {
-                    alert('Error deleting Specialty');
-                }
-            });
-        } else {
-            // If user cancels the action
-            alert('Delete action has been canceled.');
-        }
-    }
     </script>
     @endsection

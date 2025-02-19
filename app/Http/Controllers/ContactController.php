@@ -14,6 +14,15 @@ class ContactController extends Controller
         $this->contact = $contact;
     }
 
+    
+
+    //get all contacts
+    public function index(){
+        $contacts = $this->contact->paginate(10);
+        return view('admin.contacts.ContactManagement',compact('contacts'));
+    }
+
+    //Add contact to database
     public function sendContact(Request $request){
         $this->contact->create([
             'name'    => $request->name,

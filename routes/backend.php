@@ -8,6 +8,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HandbookController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -102,4 +103,10 @@ Route::prefix('schedules')->middleware(['auth', AdminMiddleware::class])->group(
     Route::get('/form-issue-invoice', function(){
         return view ('admin.schedules.form-issue-invoice');
     });
+});
+
+//Contacts
+Route::prefix('contacts')->middleware(['auth', AdminMiddleware::class])->group(function (){
+    Route::get('/',[ContactController::class, 'index']);
+    Route::get('view-contact/{id}',[ContactController::class, 'viewOneContact']);
 });

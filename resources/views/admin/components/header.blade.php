@@ -171,6 +171,10 @@
                         aria-expanded="false"><i class="fas fa-calendar-check"></i><span class="hide-menu">Schedules</span></a>
                 </li>
                 <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/contacts"
+                        aria-expanded="false"><i class=" fas fa-inbox"></i><span class="hide-menu">Contact</span></a>
+                </li>
+                <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/charts"
                         aria-expanded="false"><i class="mdi mdi-chart-bar"></i><span class="hide-menu">Charts</span></a>
                 </li>

@@ -50,8 +50,7 @@
                     <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form
                         with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're
                         done.</p>
-                    <form>
-                        <!-- <form method='POST' action='send-contact'> -->
+                    <form id='sent-contact-form'>
                         @csrf
                         <div class="row g-3">
                             <div class="col-md-6">
@@ -83,7 +82,7 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary w-100 py-3" onclick="sendEmail()" type="submit">Send
+                                <button class="btn btn-primary w-100 py-3" onclick="sendEmail()" type="button">Send
                                     Message</button>
                             </div>
                         </div>
@@ -107,7 +106,7 @@ function sendEmail() {
     let email = document.getElementById('email').value;
     let title = document.getElementById('title').value;
     let message = document.getElementById('message').value;
-    $.ajax ({
+    $.ajax({
         url: '/send-contact',
         type: 'POST',
         headers: {
