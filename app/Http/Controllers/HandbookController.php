@@ -92,4 +92,10 @@ class HandbookController extends Controller
             return view('clients.detailPost',compact('post','content'));
         }
     }
+
+    //Get posts by authorId
+    public function getPostsByAuthor($id){
+        $posts = $this->handbook->where('author',$id)->get();
+        return view('admin.posts.postManagement',compact('posts'));
+    }
 }

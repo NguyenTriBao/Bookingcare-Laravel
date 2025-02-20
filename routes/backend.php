@@ -11,6 +11,8 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\DoctorMiddleware;
+use App\Http\Middleware\AdminDoctorMiddleware;
 
 Route::get('/admin/login', function () {
     return view('admin.login');
@@ -55,13 +57,15 @@ Route::prefix('doctors')->middleware(['auth', AdminMiddleware::class])->group(fu
     Route::get('/', [DoctorController::class, 'getAllDoctor'])->name('get_all_doctor');
     Route::get('/create-doctor',[DoctorController::class, 'addNewDoctor']);
     Route::post('/create', [DoctorController::class, 'store'])->name('create');
+    Route::delete('/delete-doctor/{id}', [DoctorController::class, 'delete'])->name('delete');
+});
+Route::prefix('doctors')->middleware(['auth', AdminDoctorMiddleware::class])->group(function () {
     Route::get('/edit-doctor/{id}',[DoctorController::class,'editDoctor'])->name('edit_doctor');
     Route::put('/update',[DoctorController::class,'update'])->name('update');
-    Route::delete('/delete-doctor/{id}', [DoctorController::class, 'delete'])->name('delete');
 });
 
 //SPECIALTIES
-Route::prefix('specialties')->group(function () {
+Route::prefix('specialties')->middleware(['auth', AdminMiddleware::class])->group(function () {
     //Get all Specialties
     Route::get('/', [SpecialtyController::class, 'getAllSpecialty'])->name('get_all_specialty');
     Route::get('/edit-specialty/{id}', [SpecialtyController::class, 'editSpecialty'])->name('edit_specialty');
@@ -83,6 +87,12 @@ Route::prefix('users')->middleware(['auth', AdminMiddleware::class])->group(func
 //POSTS
 Route::prefix('posts')->middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/', [HandbookController::class, 'getAllHandbook'])->name('get_all_handbook');
+});
+Route::prefix('posts')->middleware(['auth', DoctorMiddleware::class])->group(function (){
+    Route::get('/{id}', [HandbookController::class,'getPostsByAuthor']);
+});
+Route::prefix('posts')->middleware(['auth', AdminDoctorMiddleware::class])->group(function (){
+    Route::get('/{id}', [HandbookController::class,'getPostsByAuthor']);
     Route::get('/create-posts',[HandbookController::class, 'addNewPost']);
     Route::post('/create', [HandbookController::class, 'store'])->name('create');
     Route::get('/edit-post/{id}',[HandbookController::class,'editPost'])->name('edit_post');
@@ -90,13 +100,12 @@ Route::prefix('posts')->middleware(['auth', AdminMiddleware::class])->group(func
     Route::delete('/delete-post/{id}', [HandbookController::class, 'delete'])->name('delete');
 });
 
+
 //Appointments
 Route::prefix('schedules')->middleware(['auth', AdminMiddleware::class])->group(function (){
     Route::get('/', [ScheduleController::class, 'index'])->name('index');
     Route::get('/edit-schedules/{id}',[ScheduleController::class, 'edit'])->name('edit-schedules');
     Route::post('/create',[ScheduleController::class, 'create'])->name('schedules.create');
-
-
     Route::post('/storePatient', [ScheduleController::class, 'storePatient']);
     Route::get('/issue-invoice', [ScheduleController::class, 'issueInvoice']);
     Route::post('/sendEmailToPatient', [ScheduleController::class, 'sendEmailToPatient']);
@@ -106,7 +115,7 @@ Route::prefix('schedules')->middleware(['auth', AdminMiddleware::class])->group(
 });
 
 //Contacts
-Route::prefix('contacts')->middleware(['auth', AdminMiddleware::class])->group(function (){
+Route::prefix('contacts')->middleware(['auth', AdminDoctorMiddleware::class])->group(function (){
     Route::get('/',[ContactController::class, 'index']);
     Route::get('view-contact/{id}',[ContactController::class, 'viewOneContact']);
 });

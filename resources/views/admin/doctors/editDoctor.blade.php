@@ -68,12 +68,13 @@
                                         name="email" value="{{$doctor->user['email']}}" />
                                 </div>
                             </div>
+                            
                             <div class="form-group row">
                                 <label for="password"
                                     class="col-sm-3 text-end control-label col-form-label">Password</label>
                                 <div class="col-sm-9">
                                     <input type="password" class="form-control" id="password" name="password"
-                                        placeholder="Password Here" value="{{$doctor->user['password']}}" />
+                                        placeholder="Password Here"/>
                                 </div>
                             </div>
 
@@ -176,7 +177,7 @@
         <div class="border-top">
             <div class="card-body text-end">
                 <button type="submit" class="btn btn-primary">
-                    Submit
+                    Edit
                 </button>
             </div>
         </div>

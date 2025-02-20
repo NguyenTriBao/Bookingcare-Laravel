@@ -106,8 +106,7 @@
                             width="31" />
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-account me-1 ms-1"></i> My
-                            Profile</a>
+                        <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-account me-1 ms-1"></i> {{Auth::user()->firstName}} {{Auth::user()->lastName}}</a>
                         <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-wallet me-1 ms-1"></i> My
                             Balance</a>
                         <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-email me-1 ms-1"></i>
@@ -150,33 +149,42 @@
                         aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
                             class="hide-menu">Dashboard</span></a>
                 </li>
+                @if(Auth::user()->roleId === 'R1')
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/specialties"
                         aria-expanded="false"><i class=" fas fa-cog"></i><span class="hide-menu">Specialties</span></a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/users"
-                        aria-expanded="false"><i class="me-2 mdi mdi-account"></i><span class="hide-menu">User</span></a>
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/users" aria-expanded="false"><i
+                            class="me-2 mdi mdi-account"></i><span class="hide-menu">User</span></a>
                 </li>
-                <li class="sidebar-item">
+                @endif
+                <!-- <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/doctors"
-                        aria-expanded="false"><i class="me-2 mdi mdi-account"></i><span class="hide-menu">Doctors</span></a>
+                        aria-expanded="false"><i class="me-2 mdi mdi-account"></i><span
+                            class="hide-menu">Doctors</span></a>
+                </li> -->
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ Auth::user()->roleId === 'R1' ? url('/doctors') : url('/doctors/edit-doctor/' . Auth::user()->id) }}"
+                        aria-expanded="false"><i class="me-2 mdi mdi-account"></i><span
+                            class="hide-menu"> Doctors</span></a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/posts"
-                        aria-expanded="false"><i class="far fa-newspaper"></i><span class="hide-menu">Posts</span></a>
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ Auth::user()->roleId === 'R1' ? url('/posts') : url('/posts/'. Auth::user()->id) }}" aria-expanded="false"><i
+                            class="far fa-newspaper"></i><span class="hide-menu">Posts</span></a>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/schedules"
-                        aria-expanded="false"><i class="fas fa-calendar-check"></i><span class="hide-menu">Schedules</span></a>
+                        aria-expanded="false"><i class="fas fa-calendar-check"></i><span
+                            class="hide-menu">Schedules</span></a>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/contacts"
                         aria-expanded="false"><i class=" fas fa-inbox"></i><span class="hide-menu">Contact</span></a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/charts"
-                        aria-expanded="false"><i class="mdi mdi-chart-bar"></i><span class="hide-menu">Charts</span></a>
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/charts" aria-expanded="false"><i
+                            class="mdi mdi-chart-bar"></i><span class="hide-menu">Charts</span></a>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/widgets"
@@ -184,10 +192,10 @@
                             class="hide-menu">Widgets</span></a>
                 </li>
                 <li class="sidebar-item">
-                            <a href="/pages-invoice" class="sidebar-link"><i
-                                    class="mdi mdi-bulletin-board"></i><span class="hide-menu"> Invoice
-                                </span></a>
-                        </li>
+                    <a href="/pages-invoice" class="sidebar-link"><i class="mdi mdi-bulletin-board"></i><span
+                            class="hide-menu"> Invoice
+                        </span></a>
+                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

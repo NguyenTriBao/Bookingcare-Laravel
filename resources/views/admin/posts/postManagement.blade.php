@@ -14,7 +14,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Doctors</h4>
+                <h4 class="page-title">POSTS</h4>
                 <div class="ms-auto text-end">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -43,9 +43,6 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title mb-0">Posts</h4>
-                    </div>
                     <div class="comment-widgets scrollable">
                         <!-- Comment Row -->
                         @foreach($posts as $post)

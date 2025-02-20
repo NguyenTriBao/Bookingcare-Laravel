@@ -14,8 +14,7 @@ class AdminMiddleware
         if (Auth::check() && Auth::user()->roleId === 'R1') {
             return $next($request);
         }
-
         // Chuyển hướng về trang login nếu không đủ quyền
-        return redirect('/admin/login')->with('error', 'Access Denied!');
+        return redirect('/dashboard')->with('error', 'Bạn Không có quyền truy cập');
     }
 }
