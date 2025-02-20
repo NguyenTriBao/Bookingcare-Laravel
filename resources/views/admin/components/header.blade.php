@@ -112,9 +112,8 @@
                         <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-email me-1 ms-1"></i>
                             Inbox</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-settings me-1 ms-1"></i>
-                            Account
-                            Setting</a>
+                        <a class="dropdown-item" href="/change-password"><i class="mdi mdi-settings me-1 ms-1"></i>
+                            Change Password</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/admin/logout"><i class="fa fa-power-off me-1 ms-1"></i>
                             Logout</a>
@@ -174,7 +173,7 @@
                             class="far fa-newspaper"></i><span class="hide-menu">Posts</span></a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/schedules"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ Auth::user()->roleId === 'R1' ? url('/schedules') : url('schedules/edit-schedules/'. Auth::user()->id )}}"
                         aria-expanded="false"><i class="fas fa-calendar-check"></i><span
                             class="hide-menu">Schedules</span></a>
                 </li>

@@ -95,4 +95,21 @@ class AdminController extends Controller
             return back()->with('error','Mật khẩu nhập lại không trùng khớp');
         }
     }
+
+    //Recover Password
+    public function recoverPassword(Request $request){
+        if(!Hash::check($request->oldPassword, Auth::user()->password)){
+            return back()->with('error', 'Mật khẩu cũ không đúng');
+        }
+        if($request->newPassword !== $request->passwordConfirmation){
+            return back()->with('error', 'Nhập lại mật khẩu mới không đúng, vui lòng nhập lại!');
+        }
+        else{
+            $user = Auth::user();
+            $user->update([
+                'password' => Hash::make($request->newPassword)
+            ]);
+        }
+        return $this->logout();
+    }
 }

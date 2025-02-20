@@ -29,6 +29,10 @@ Route::get('/pages-invoice', function () {
 Route::get('pages-calendar', function () {
     return view('admin.pages-calendar');
 });
+Route::get('change-password', function () {
+    return view('admin.recover-password');
+});
+Route::post('change-password', [AdminController::class, 'recoverPassword']);
 
 //TEST MIDDLEWARE
 Route::get('/dashboard', function () {
@@ -101,9 +105,12 @@ Route::prefix('posts')->middleware(['auth', AdminDoctorMiddleware::class])->grou
 });
 
 
-//Appointments
+//Schedules
 Route::prefix('schedules')->middleware(['auth', AdminMiddleware::class])->group(function (){
     Route::get('/', [ScheduleController::class, 'index'])->name('index');
+
+});
+Route::prefix('schedules')->middleware(['auth', AdminDoctorMiddleware::class])->group(function (){
     Route::get('/edit-schedules/{id}',[ScheduleController::class, 'edit'])->name('edit-schedules');
     Route::post('/create',[ScheduleController::class, 'create'])->name('schedules.create');
     Route::post('/storePatient', [ScheduleController::class, 'storePatient']);
