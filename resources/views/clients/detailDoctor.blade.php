@@ -7,8 +7,8 @@
 <div class="container-xxl py-5">
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-            <p class="d-inline-block border rounded-pill py-1 px-4">Doctors</p>
-            <h1>Detail Doctor</h1>
+            <p class="d-inline-block border rounded-pill py-1 px-4">Bác Sĩ</p>
+            <h1>Thông tin bác sĩ </h1>
         </div>
         <div class="row g-4">
             <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -18,7 +18,7 @@
                     </div>
                     <div class="team-text bg-light text-center p-4">
                         <h5 id="doctor" data-id="{{$doctor->user->id}}">
-                            {{$doctor->user['lastName']}} {{$doctor->user['firstName']}} Doctor
+                            Bác sĩ {{$doctor->user['firstName']}} {{$doctor->user['lastName']}}
                         </h5>
                     </div>
                 </div>
@@ -44,20 +44,12 @@
                     @endforeach
                 </div>
                 <h5>GIÁ KHÁM: 150.000 đồng</h5>
-                <h5>ĐỊA CHỈ KHÁM</h5>
-                <p>Phòng khám Spinetech Clinic</p>
-                <p>Tòa nhà GP, 257 Giải Phóng, Phương Mai, Đống Đa, Hà Nội</p>
 
             </div>
         </div>
     </div>
 </div>
 <!-- Team End -->
-
-
-
-
-
 
 
 <script>

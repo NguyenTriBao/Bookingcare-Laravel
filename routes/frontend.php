@@ -26,6 +26,7 @@ Route::get('/404', function () {
     return view('clients.404');
 });
 
+//Footer
 
 
 //Specialty

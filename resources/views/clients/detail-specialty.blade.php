@@ -16,7 +16,7 @@
 <div class="bg-light" style="width: 100%; height: 50px;"></div>
 <div class="container-xxl  py-5">
     <div style="margin: 0 0;">
-        <h2> Doctors </h2>
+        <h2> Đội ngũ bác sĩ của chuyên khoa </h2>
     </div>
 
 

@@ -22,6 +22,7 @@ class SpecialtyController extends Controller
         $specialty = Specialty::with(['doctors.user', 'doctors.schedules'])->find($id);
         return view('clients.detail-specialty', compact('specialty'));
     }
+
     //Get all Specialties
     public function getAllSpecialties($view){
         $specialties = Specialty::get();
@@ -33,6 +34,7 @@ class SpecialtyController extends Controller
     public function service(){
         return $this->getAllSpecialties('clients.service');
     }
+
     //Get 1 Specialty
     public function editSpecialty($id){
         $detailSpecialty = Specialty::get()->where('id', $id)->first();
@@ -51,7 +53,6 @@ class SpecialtyController extends Controller
         $this->specialty->create($data);
         return redirect()->route('get_all_specialty');
     }
-
 
     //delete
     public function delete ($id){

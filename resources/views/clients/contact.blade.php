@@ -14,8 +14,8 @@
                         <i class="fa fa-map-marker-alt text-primary"></i>
                     </div>
                     <div class="ms-4">
-                        <p class="mb-2">Address</p>
-                        <h5 class="mb-0">123 Street, New York, USA</h5>
+                        <p class="mb-2">Địa chỉ</p>
+                        <h5 class="mb-0">Đường 123, Thành Phố Hồ Chí Minh, Việt Nam</h5>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                         <i class="fa fa-phone-alt text-primary"></i>
                     </div>
                     <div class="ms-4">
-                        <p class="mb-2">Call Us Now</p>
+                        <p class="mb-2">Gọi cho chúng tôi ngay</p>
                         <h5 class="mb-0">+012 345 6789</h5>
                     </div>
                 </div>
@@ -38,18 +38,16 @@
                         <i class="fa fa-envelope-open text-primary"></i>
                     </div>
                     <div class="ms-4">
-                        <p class="mb-2">Mail Us Now</p>
+                        <p class="mb-2">Địa chỉ Email</p>
                         <h5 class="mb-0">info@example.com</h5>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                 <div class="bg-light rounded p-5">
-                    <p class="d-inline-block border rounded-pill py-1 px-4">Contact Us</p>
-                    <h1 class="mb-4">Have Any Query? Please Contact Us!</h1>
-                    <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form
-                        with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're
-                        done.</p>
+                    <p class="d-inline-block border rounded-pill py-1 px-4">Liên hệ với chúng tôi</p>
+                    <h1 class="mb-4">Bạn có thắc mắc?</h1>
+                    <h1 class="mb-4">Hãy liên hệ với chúng tôi!</h1>
                     <form id='sent-contact-form'>
                         @csrf
                         <div class="row g-3">
@@ -82,8 +80,7 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary w-100 py-3" onclick="sendEmail()" type="button">Send
-                                    Message</button>
+                                <button class="btn btn-primary w-100 py-3" onclick="sendEmail()" type="button">Gửi thông tin</button>
                             </div>
                         </div>
                     </form>

@@ -69,7 +69,7 @@
                                     <textarea class="form-control border-0" rows="5" placeholder="Describe your problem"></textarea>
                                 </div>
                                 <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Book Appointment</button>
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Đặt lịch hẹn</button>
                                 </div>
                             </div>
                         </form>
