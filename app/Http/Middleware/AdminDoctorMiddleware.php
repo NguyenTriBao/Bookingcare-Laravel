@@ -21,6 +21,6 @@ class AdminDoctorMiddleware
                     return $next($request);
                 }
                 // Chuyển hướng về trang login nếu không đủ quyền
-                return redirect('/dashboard')->with('error', 'Bạn Không có quyền truy cập');
+                return redirect('/admin')->with('error', 'Bạn Không có quyền truy cập');
     }
 }

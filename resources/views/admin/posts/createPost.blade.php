@@ -53,10 +53,10 @@
                                 <label class="col-md-3">Image</label>
                                 <div class="col-md-9">
                                     <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="validatedCustomFile"
-                                    name="image" onchange="previewImage(event)" />
-                                        <img id="preview" src=""
-                                            alt="" width="100" height="100" class="rounded-circle mt-2" />
+                                        <input type="file" class="custom-file-input" id="validatedCustomFile"
+                                            name="image" onchange="previewImage(event)" />
+                                        <img id="preview" src="" alt="" width="100" height="100"
+                                            class="rounded-circle mt-2" />
                                     </div>
                                 </div>
                             </div>
@@ -65,6 +65,15 @@
                                     (Markdown):</label>
                                 <div class="col-md-12">
                                     <textarea id="markdown-editor" name="content" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3" for="col-sm-3 control-label col-form-label">Đăng tải</label>
+                                <div class="col-md-9">
+                                    <select name="status" id="status">
+                                        <option value="0">None</option>
+                                        <option value="1">Publish</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

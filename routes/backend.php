@@ -14,7 +14,7 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\DoctorMiddleware;
 use App\Http\Middleware\AdminDoctorMiddleware;
 
-Route::get('/admin/login', function () {
+Route::get('/admin', function () {
     return view('admin.login');
 });
 Route::get('/widgets', function () {
@@ -35,22 +35,11 @@ Route::get('change-password', function () {
 Route::post('change-password', [AdminController::class, 'recoverPassword']);
 
 //TEST MIDDLEWARE
-Route::get('/dashboard', function () {
-    if (Auth::check() && (Auth::user()->roleId === 'R1' || Auth::user()->roleId === 'R2')) {
-        return view('admin.index');
-    }
-    return redirect('/admin')->with('error', 'Access Denied!');
-});
-Route::middleware('auth')->group(function () {
-    Route::get('/admin', function () {
-        // Nếu chưa đăng nhập, chuyển hướng về trang /admin
-        return redirect('/admin');
-    });
-});
+Route::get('/dashboard', [AdminController::class, 'getAllPostAdmin']);
 
 //LOGIN AND LOGOUT
 Route::prefix('admin')->group(function (){
-    Route::post('/login',[AdminController::class, 'login'])->name('login');
+    Route::post('/',[AdminController::class, 'login'])->name('login');
     Route::get('/logout',[AdminController::class, 'logout'])->name('logout');
     Route::post('/recoverPassword',[AdminController::class, 'recover'])->name('recover');
     Route::post('/change-password',[AdminController::class, 'changePassword'])->name('changePassword');
@@ -89,20 +78,28 @@ Route::prefix('users')->middleware(['auth', AdminMiddleware::class])->group(func
 });
 
 //POSTS
-Route::prefix('posts')->middleware(['auth', AdminMiddleware::class])->group(function () {
-    Route::get('/', [HandbookController::class, 'getAllHandbook'])->name('get_all_handbook');
+Route::prefix('posts')->middleware(['auth'])->group(function () {
+    // Admin có quyền quản lý toàn bộ bài viết
+    Route::middleware(AdminMiddleware::class)->group(function () {
+        Route::get('/', [HandbookController::class, 'getAllHandbook'])->name('get_all_handbook');
+    });
+
+    // Doctor chỉ có thể xem bài viết của họ
+    Route::middleware(DoctorMiddleware::class)->group(function () {
+        Route::get('/{id}', [HandbookController::class, 'getPostsByAuthor']);
+    });
+
+    // Cả Admin và Doctor đều có quyền tạo, sửa, xóa bài viết
+    Route::middleware(AdminDoctorMiddleware::class)->group(function () {
+        Route::get('/posts/create-post', [HandbookController::class, 'addNewPost'])->name('create_post');
+        Route::post('/create', [HandbookController::class, 'store'])->name('create');
+        Route::get('/edit-post/{id}', [HandbookController::class, 'editPost'])->name('edit_post');
+        Route::put('/update', [HandbookController::class, 'update'])->name('update');
+        Route::delete('/delete-post/{id}', [HandbookController::class, 'delete'])->name('delete');
+        Route::get('/change-status/{id}',[HandbookController::class, 'changeStatus']);
+    });
 });
-Route::prefix('posts')->middleware(['auth', DoctorMiddleware::class])->group(function (){
-    Route::get('/{id}', [HandbookController::class,'getPostsByAuthor']);
-});
-Route::prefix('posts')->middleware(['auth', AdminDoctorMiddleware::class])->group(function (){
-    Route::get('/{id}', [HandbookController::class,'getPostsByAuthor']);
-    Route::get('/create-posts',[HandbookController::class, 'addNewPost']);
-    Route::post('/create', [HandbookController::class, 'store'])->name('create');
-    Route::get('/edit-post/{id}',[HandbookController::class,'editPost'])->name('edit_post');
-    Route::put('/update',[HandbookController::class,'update'])->name('update');
-    Route::delete('/delete-post/{id}', [HandbookController::class, 'delete'])->name('delete');
-});
+
 
 
 //Schedules

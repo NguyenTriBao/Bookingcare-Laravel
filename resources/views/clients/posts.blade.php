@@ -17,7 +17,6 @@
                 <img src="{{ asset('storage/' . $post->image) }}" alt="">
                 <h3 class="news-title">{{$post->title}}</h3>
                 <p class="news-description">
-                    {{$post->description}}
                 </p>
                 <div class="news-meta">
                     <span class="author">Bởi {{$post->user->firstName}} {{$post->user->lastName}}</span>

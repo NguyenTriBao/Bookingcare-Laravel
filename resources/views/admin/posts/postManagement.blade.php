@@ -14,16 +14,16 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">POSTS</h4>
+                <h4 class="page-title">Danh sách bài viết</h4>
                 <div class="ms-auto text-end">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <a href="{{ URL::to('/posts/create-posts') }}">
-                                <button type="button" class="btn btn-success margin-5 text-white" data-toggle="modal"
-                                    data-target="#Modal1">
+                            <a href="{{ route('create_post') }}">
+                                <button type="button" class="btn btn-success margin-5 text-white">
                                     Create New
                                 </button>
                             </a>
+
                         </ol>
                     </nav>
                 </div>
@@ -60,6 +60,10 @@
                                             Edit
                                         </button>
                                     </a>
+                                    <button data-id="{{$post->id}}" onclick="changeStatus(this)" type="button"
+                                        class="btn btn-success btn-sm text-white">
+                                        {{$post->status == 1 ? 'Published' : 'Publish'}}
+                                    </button>
                                     <a href="#" data-id="{{$post->id}}" onclick="deletePost(this)">
                                         <button type="button" class="btn btn-danger btn-sm text-white">
                                             Delete
@@ -84,6 +88,23 @@
     <!-- ============================================================== -->
     <!-- ============================================================== -->
     <script>
+    function changeStatus(element) {
+        let id = element.getAttribute('data-id');
+        $.ajax({
+            url: '/posts/change-status/' + id,
+            type: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert('Error Change Status On Post');
+            }
+        });
+    }
+
     function deletePost(element) {
         let id = element.getAttribute('data-id'); // Lấy giá trị từ thuộc tính data-id;
         if (confirm('Are you sure you want to delete this post?')) {

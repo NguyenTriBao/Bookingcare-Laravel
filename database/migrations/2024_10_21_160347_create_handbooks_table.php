@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('content');
             $table->string('image');
             $table->unsignedBigInteger('author');
+            $table->integer('status');
             $table->timestamps();
         });
     }

@@ -5,15 +5,18 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Handbook;
 
 
 class AdminController extends Controller
 {
 
     private $user;
+    private $handbook;
 
-    public function __construct(User $user){
+    public function __construct(User $user, Handbook $handbook){
         $this->user = $user;
+        $this->handbook = $handbook;
     }
 
     public function adminIndex()
@@ -54,6 +57,15 @@ class AdminController extends Controller
             }
         }
         return back()->with('error', 'Email hoặc mật khẩu không chính xác');
+    }
+    //Get data on page dashboard
+    public function getAllPostAdmin(){
+        if(Auth::user() == null)
+        {
+            return redirect('/admin');
+        }
+        $posts = $this->handbook->latest()->take(5)->get();
+        return view('admin.index',compact('posts'));
     }
     
     //logout

@@ -16,7 +16,7 @@ class HandbookController extends Controller
         $this->handbook = $handbook;
         $this->user = $user;
     }
-    //
+    //Get all Posts
     public function getAllNews($view)
     {
     $posts = Handbook::with('user')->get();
@@ -24,7 +24,8 @@ class HandbookController extends Controller
 
     }
     public function getallPosts(){
-        return $this->getAllNews('clients.posts');
+        $posts = Handbook::with('user')->where('status',1)->get();
+        return view('clients.posts', compact('posts'));
     }
     public function getAllHandbook(){
         return $this->getAllNews('admin.posts.postManagement');
@@ -34,7 +35,7 @@ class HandbookController extends Controller
     }
     public function editPost($id){
         $post = $this->handbook->find($id);
-        if(!post){
+        if(!$post){
             return $this->getAllNews('admin.posts.postManagement');
         }
         else{
@@ -51,7 +52,8 @@ class HandbookController extends Controller
             'title' => $request->title,
             'image' => $request->image,
             'content' => $request->content,
-            'author' => $userId
+            'author' => $userId,
+            'status' => $request->status
         ]);
         return redirect()->route('get_all_handbook');
     }
@@ -97,5 +99,21 @@ class HandbookController extends Controller
     public function getPostsByAuthor($id){
         $posts = $this->handbook->where('author',$id)->get();
         return view('admin.posts.postManagement',compact('posts'));
+    }
+
+    //Change Status On Post
+    public function changeStatus($id){
+        $post = $this->handbook->where('id',$id)->first();
+        if($post->status === 0){
+            $post->update([
+                'status' => 1
+            ]);
+        }
+        else{
+            $post->update([
+                'status' => 0
+            ]);
+        }
+        return response()->json(['success' => 'Change status on post successfully']);
     }
 }

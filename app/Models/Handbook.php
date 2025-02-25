@@ -9,7 +9,7 @@ class Handbook extends Model
 {
     use HasFactory;
     protected $table = 'handbooks';
-    protected $fillable = ['title', 'content', 'image', 'author'];
+    protected $fillable = ['title', 'content', 'image', 'author','status'];
 
     public function user()
     {

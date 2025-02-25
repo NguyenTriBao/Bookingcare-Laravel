@@ -19,6 +19,6 @@ class DoctorMiddleware
             return $next($request);
         }
         // Nếu không đúng, chuyển hướng hoặc báo lỗi
-        return redirect('/')->with('error', 'Bạn không có quyền chỉnh sửa thông tin này.');
+        return redirect('/admin')->with('error', 'Bạn không có quyền chỉnh sửa thông tin này.');
     }
 }

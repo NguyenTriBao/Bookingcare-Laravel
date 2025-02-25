@@ -47,7 +47,7 @@
                         {{ session('error') }}
                     </div>
                     @endif
-                    <form class="form-horizontal mt-3" action="/admin/login" method="POST">
+                    <form class="form-horizontal mt-3" action="/admin" method="POST">
                         @csrf
                         <div class="row pb-4">
                             <div class="col-12">
