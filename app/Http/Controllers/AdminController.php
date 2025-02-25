@@ -70,20 +70,36 @@ class AdminController extends Controller
         if (Auth::user() == null) {
             return redirect('/admin');
         }
+        else{
+            //Lấy 5 bài viết mới nhất
+            $posts = $this->handbook->latest()->take(5)->get();
     
-        $posts = $this->handbook->latest()->take(5)->get();
-    
-        // Lấy doanh thu theo tháng
-        $data = History::selectRaw('MONTHNAME(created_at) as month, SUM(price) as total')
+            // Lấy doanh thu theo tháng
+            $data = History::selectRaw('MONTHNAME(created_at) as month, SUM(price) as total')
+                ->groupBy('month')
+                ->orderByRaw('MONTH(created_at)') // Đảm bảo thứ tự theo tháng
+                ->get();
+        
+            // Chuyển thành mảng để gửi qua frontend
+            $months = $data->pluck('month')->toArray();
+            $totals = $data->pluck('total')->toArray();
+
+            //Lấy số lượng bác sĩ
+            $doctorCount = $this->user->where('roleId','R2')->count();
+
+            //Lấy số lượng bệnh nhân
+            $patientCount = $this->user->where('roleId','R3')->count();
+
+            //Lấy số lượng hoá đơn trong tháng
+            $totalBill = $this->history
+            ->selectRaw('MONTH(created_at) as month')
+            ->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()]) // Lọc theo tháng hiện tại
             ->groupBy('month')
-            ->orderByRaw('MONTH(created_at)') // Đảm bảo thứ tự theo tháng
-            ->get();
-    
-        // Chuyển thành mảng để gửi qua frontend
-        $months = $data->pluck('month')->toArray();
-        $totals = $data->pluck('total')->toArray();
-    
-        return view('admin.index', compact('posts', 'months', 'totals'));
+            ->orderByRaw('MONTH(created_at) DESC')
+            ->first(); // Lấy tháng gần nhất
+
+            return view('admin.index', compact('posts', 'months', 'totals','doctorCount','patientCount','totalBill'));
+        }
     }
     
     

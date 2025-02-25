@@ -16,9 +16,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">
-                                Library
-                            </li>
+                            
                         </ol>
                     </nav>
                 </div>
@@ -58,8 +56,22 @@
                                     <div class="col-6">
                                         <div class="bg-dark p-10 text-white text-center">
                                             <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
-                                            <h5 class="mb-0 mt-1">2540</h5>
-                                            <small class="font-light">Total Users</small>
+                                            <h5 class="mb-0 mt-1">{{$patientCount}}</h5>
+                                            <small class="font-light">Tổng số bệnh nhân</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="bg-dark p-10 text-white text-center">
+                                            <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
+                                            <h5 class="mb-0 mt-1">{{$doctorCount}}</h5>
+                                            <small class="font-light">Tổng số bác sĩ</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <div class="bg-dark p-10 text-white text-center">
+                                            <i class="mdi mdi-tag fs-3 mb-1 font-16"></i>
+                                            <h5 class="mb-0 mt-1">{{$totalBill->month}}</h5>
+                                            <small class="font-light">Tổng số hoá đơn/tháng</small>
                                         </div>
                                     </div>
                                 </div>
