@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Handbook;
+use App\Models\History;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+use Carbon\Carbon;
 
 
 class AdminController extends Controller
@@ -13,10 +17,12 @@ class AdminController extends Controller
 
     private $user;
     private $handbook;
+    private $history;
 
-    public function __construct(User $user, Handbook $handbook){
+    public function __construct(User $user, Handbook $handbook, History $history){
         $this->user = $user;
         $this->handbook = $handbook;
+        $this->history = $history;
     }
 
     public function adminIndex()
@@ -59,14 +65,27 @@ class AdminController extends Controller
         return back()->with('error', 'Email hoặc mật khẩu không chính xác');
     }
     //Get data on page dashboard
-    public function getAllPostAdmin(){
-        if(Auth::user() == null)
-        {
+    public function getAllPostAdmin()
+    {
+        if (Auth::user() == null) {
             return redirect('/admin');
         }
+    
         $posts = $this->handbook->latest()->take(5)->get();
-        return view('admin.index',compact('posts'));
+    
+        // Lấy doanh thu theo tháng
+        $data = History::selectRaw('MONTHNAME(created_at) as month, SUM(price) as total')
+            ->groupBy('month')
+            ->orderByRaw('MONTH(created_at)') // Đảm bảo thứ tự theo tháng
+            ->get();
+    
+        // Chuyển thành mảng để gửi qua frontend
+        $months = $data->pluck('month')->toArray();
+        $totals = $data->pluck('total')->toArray();
+    
+        return view('admin.index', compact('posts', 'months', 'totals'));
     }
+    
     
     //logout
     public function logout()

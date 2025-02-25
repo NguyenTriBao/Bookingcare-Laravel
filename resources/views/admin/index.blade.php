@@ -42,14 +42,15 @@
                         <div class="d-md-flex align-items-center">
                             <div>
                                 <h4 class="card-title">Thống kê doanh thu</h4>
-                                <h5 class="card-subtitle">Thống kê về tháng gần nhất</h5>
+                                <h5 class="card-subtitle">Doanh thu về 12 tháng gần nhất</h5>
                             </div>
                         </div>
                         <div class="row">
                             <!-- column -->
                             <div class="col-lg-9">
                                 <div class="flot-chart">
-                                    <div class="flot-chart-content" id="flot-line-chart"></div>
+                                    <!-- <div class="flot-chart-content" id="flot-line-chart"></div> -->
+                                    <canvas id="revenueChart"></canvas>
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -59,41 +60,6 @@
                                             <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
                                             <h5 class="mb-0 mt-1">2540</h5>
                                             <small class="font-light">Total Users</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="bg-dark p-10 text-white text-center">
-                                            <i class="mdi mdi-plus fs-3 font-16"></i>
-                                            <h5 class="mb-0 mt-1">120</h5>
-                                            <small class="font-light">New Users</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 mt-3">
-                                        <div class="bg-dark p-10 text-white text-center">
-                                            <i class="mdi mdi-cart fs-3 mb-1 font-16"></i>
-                                            <h5 class="mb-0 mt-1">656</h5>
-                                            <small class="font-light">Total Shop</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 mt-3">
-                                        <div class="bg-dark p-10 text-white text-center">
-                                            <i class="mdi mdi-tag fs-3 mb-1 font-16"></i>
-                                            <h5 class="mb-0 mt-1">9540</h5>
-                                            <small class="font-light">Total Orders</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 mt-3">
-                                        <div class="bg-dark p-10 text-white text-center">
-                                            <i class="mdi mdi-table fs-3 mb-1 font-16"></i>
-                                            <h5 class="mb-0 mt-1">100</h5>
-                                            <small class="font-light">Pending Orders</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 mt-3">
-                                        <div class="bg-dark p-10 text-white text-center">
-                                            <i class="mdi mdi-web fs-3 mb-1 font-16"></i>
-                                            <h5 class="mb-0 mt-1">8540</h5>
-                                            <small class="font-light">Online Orders</small>
                                         </div>
                                     </div>
                                 </div>
@@ -248,6 +214,50 @@
     <!-- End Container fluid  -->
     <!-- ============================================================== -->
     <!-- ============================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    // Lấy dữ liệu từ Laravel (được nhúng vào blade template)
+    let months = @json($months);
+    let totals = @json($totals);
+
+    // Vẽ biểu đồ
+    const ctx = document.getElementById('revenueChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: months, // Nhãn trục X (tháng)
+            datasets: [{
+                label: 'Doanh thu theo tháng',
+                data: totals, // Giá trị doanh thu
+                borderColor: 'rgba(75, 192, 192, 1)', // Màu đường kẻ
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Màu nền
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4 // Đường cong mượt
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true
+                },
+                tooltip: {
+                    enabled: true
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    </script>
+
+
+
     <script>
     function changeStatus(element) {
         let id = element.getAttribute('data-id');
