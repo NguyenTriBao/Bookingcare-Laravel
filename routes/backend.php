@@ -17,14 +17,8 @@ use App\Http\Middleware\AdminDoctorMiddleware;
 Route::get('/admin', function () {
     return view('admin.login');
 });
-Route::get('/widgets', function () {
-    return view('admin.widgets');
-});
 Route::get('/charts', function () {
     return view('admin.charts');
-});
-Route::get('/pages-invoice', function () {
-    return view('admin.pages-invoice');
 });
 Route::get('pages-calendar', function () {
     return view('admin.pages-calendar');
@@ -121,5 +115,12 @@ Route::prefix('schedules')->middleware(['auth', AdminDoctorMiddleware::class])->
 //Contacts
 Route::prefix('contacts')->middleware(['auth', AdminDoctorMiddleware::class])->group(function (){
     Route::get('/',[ContactController::class, 'index']);
-    Route::get('view-contact/{id}',[ContactController::class, 'viewOneContact']);
+   // Route::get('view-contact/{id}',[ContactController::class, 'viewOneContact']);
+});
+
+//Chat
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/chat-rooms', [ChatController::class, 'getChatRooms']);
+    Route::get('/messages/{roomId}', [ChatController::class, 'getMessages']);
+    Route::post('/send-message', [ChatController::class, 'sendMessage']);
 });

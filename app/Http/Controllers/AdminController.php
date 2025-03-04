@@ -92,12 +92,17 @@ class AdminController extends Controller
 
             //Lấy số lượng hoá đơn trong tháng
             $totalBill = $this->history
-            ->selectRaw('MONTH(created_at) as month')
-            ->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()]) // Lọc theo tháng hiện tại
+            ->selectRaw('COALESCE(MONTH(created_at), 0) as month') // Trả về 0 nếu không có dữ liệu
+            ->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])
             ->groupBy('month')
             ->orderByRaw('MONTH(created_at) DESC')
-            ->first(); // Lấy tháng gần nhất
-
+            ->pluck('month') // Lấy giá trị trực tiếp thay vì object
+            ->first();  // Nếu không có dữ liệu, trả về 0
+            if (!$totalBill) {
+                $totalBill = (object) ['month' => 0]; // Gán giá trị mặc định nếu không có dữ liệu
+            } else {
+                $totalBill->month = $totalBill->month ?? 0; // Đảm bảo month không bị null
+            }
             return view('admin.index', compact('posts', 'months', 'totals','doctorCount','patientCount','totalBill'));
         }
     }

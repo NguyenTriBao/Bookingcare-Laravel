@@ -55,12 +55,13 @@
                                 <span class="mb-3 d-block">{{$contact->name}}
                                 </span>
                                 <div class="comment-footer">
-                                    <a href="/view-contact/{{$contact->id}}">
+                                    <!-- <a href="/view-contact/{{$contact->id}}"> -->
+                                    <a href="">
                                         <button type="button" class="btn btn-cyan btn-sm text-white">
                                             View
                                         </button>
                                     </a>
-                                    <a href="#">
+                                    <a href="">
                                         <button type="button" class="btn btn-danger btn-sm text-white">
                                             Delete
                                         </button>

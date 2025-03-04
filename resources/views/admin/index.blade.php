@@ -16,7 +16,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            
+
                         </ol>
                     </nav>
                 </div>
@@ -71,7 +71,7 @@
                                         <div class="bg-dark p-10 text-white text-center">
                                             <i class="mdi mdi-tag fs-3 mb-1 font-16"></i>
                                             <h5 class="mb-0 mt-1">{{$totalBill->month}}</h5>
-                                            <small class="font-light">Tổng số hoá đơn/tháng</small>
+                                            <small class="font-light">Tổng số hoá đơn trong tháng</small>
                                         </div>
                                     </div>
                                 </div>
@@ -229,42 +229,64 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-    // Lấy dữ liệu từ Laravel (được nhúng vào blade template)
-    let months = @json($months);
-    let totals = @json($totals);
+    document.addEventListener("DOMContentLoaded", function() {
+        // Lấy dữ liệu từ Laravel (nhúng vào Blade)
+        let months = @json($months);
+        let totals = @json($totals);
 
-    // Vẽ biểu đồ
-    const ctx = document.getElementById('revenueChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: months, // Nhãn trục X (tháng)
-            datasets: [{
-                label: 'Doanh thu theo tháng',
-                data: totals, // Giá trị doanh thu
-                borderColor: 'rgba(75, 192, 192, 1)', // Màu đường kẻ
-                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Màu nền
-                borderWidth: 2,
-                fill: true,
-                tension: 0.4 // Đường cong mượt
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: true
-                },
-                tooltip: {
-                    enabled: true
-                }
+        // Kiểm tra dữ liệu trước khi vẽ biểu đồ
+        if (!months || !totals || months.length === 0 || totals.length === 0) {
+            console.error("Không có dữ liệu để vẽ biểu đồ");
+            return;
+        }
+
+        // Vẽ biểu đồ với Chart.js
+        const ctx = document.getElementById("revenueChart").getContext("2d");
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: months, // Trục X (tháng)
+                datasets: [{
+                    label: "Doanh thu theo tháng",
+                    data: totals, // Dữ liệu doanh thu
+                    borderColor: "rgba(75, 192, 192, 1)", // Màu đường kẻ
+                    backgroundColor: "rgba(75, 192, 192, 0.2)", // Màu nền
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4, // Làm mượt đường
+                    pointRadius: 5, // Kích thước điểm
+                    pointBackgroundColor: "rgba(75, 192, 192, 1)", // Màu điểm
+                    hoverBorderWidth: 3, // Độ dày khi hover
+                }]
             },
-            scales: {
-                y: {
-                    beginAtZero: true
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // Giữ kích thước động
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: "top"
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: true,
+                            color: "rgba(200, 200, 200, 0.3)"
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
                 }
             }
-        }
+        });
     });
     </script>
 

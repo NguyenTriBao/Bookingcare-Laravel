@@ -185,16 +185,6 @@
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/charts" aria-expanded="false"><i
                             class="mdi mdi-chart-bar"></i><span class="hide-menu">Charts</span></a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/widgets"
-                        aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span
-                            class="hide-menu">Widgets</span></a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="/pages-invoice" class="sidebar-link"><i class="mdi mdi-bulletin-board"></i><span
-                            class="hide-menu"> Invoice
-                        </span></a>
-                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->
