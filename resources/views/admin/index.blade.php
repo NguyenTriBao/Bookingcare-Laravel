@@ -173,7 +173,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-
     document.addEventListener("DOMContentLoaded", function() {
         console.log("⚡ Đang kết nối Laravel Echo...");
 
@@ -189,10 +188,11 @@
             .error(error => console.error("❌ Lỗi khi tham gia kênh:", error))
             .listen(".message.sent", (e) => {
                 console.log("📢 Tin nhắn nhận được từ server:", e);
-               addMessageToChat(e, e.user.id);
+                addMessageToChat(e, e.user.id);
             });
     });
     const doctorId = document.getElementById("currentDoctorId").value;
+
     function addMessageToChat(message, isSender) {
         const chatList = document.querySelector(".chat-list");
         const li = document.createElement("li");
@@ -227,55 +227,100 @@
     }
 
     //Lấy tất cả tin nhắn khi cũ khi load trang
+    //Cach 1
+    // document.addEventListener("DOMContentLoaded", function() {
+    //     loadMessages();
 
+    //     document.getElementById("messageInput").addEventListener("keypress", function(event) {
+    //     if (event.key === "Enter") {
+    //         event.preventDefault(); // Tránh xuống dòng trong textarea
+    //         sendMessage();
+    //     }
+    //     });
+
+    //     document.getElementById("sendMessageBtn").addEventListener("click", () => {
+    //         let message = document.getElementById("messageInput").value;
+
+    //         if (message.trim() === "") {
+    //             return;
+    //         }
+
+    //         fetch("/send-message", {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                     Authorization: "Bearer " + localStorage.getItem("token"),
+    //                     "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+    //                 },
+    //                 body: JSON.stringify({
+    //                     message: message
+    //                 }),
+    //             })
+    //             .then((response) => {
+    //                 if (!response.ok) {
+    //                     throw new Error(`HTTP error! Status: ${response.status}`);
+    //                 }
+    //                 return response.json();
+    //             })
+    //             .then((data) => {
+    //                 if (data.success) {
+    //                     document.getElementById("messageInput").value = "";
+    //                 } else {
+    //                     console.error("Server Error: ", data.message);
+    //                 }
+    //             })
+    //             .catch((error) => console.error("Error:", error));
+
+    //     });
+    // })
+
+    //Cach 2
     document.addEventListener("DOMContentLoaded", function() {
         loadMessages();
 
+        // ✅ Xử lý khi nhấn "Enter" để gửi tin nhắn
         document.getElementById("messageInput").addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-            event.preventDefault(); // Tránh xuống dòng trong textarea
-            sendMessage();
-        }
-        });
-
-        document.getElementById("sendMessageBtn").addEventListener("click", () => {
-            let message = document.getElementById("messageInput").value;
-
-            if (message.trim() === "") {
-                return;
+            if (event.key === "Enter") {
+                event.preventDefault(); // 🔹 Tránh xuống dòng khi nhấn Enter
+                sendMessage();
             }
-
-            fetch("/send-message", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + localStorage.getItem("token"),
-                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
-                    },
-                    body: JSON.stringify({
-                        message: message
-                    }),
-                })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    if (data.success) {
-                        document.getElementById("messageInput").value = "";
-                    } else {
-                        console.error("Server Error: ", data.message);
-                    }
-                })
-                .catch((error) => console.error("Error:", error));
-
         });
-    })
 
-    
-    
+        // ✅ Xử lý khi click vào nút gửi
+        document.getElementById("sendMessageBtn").addEventListener("click", sendMessage);
+    });
+
+    function sendMessage() {
+        let messageInput = document.getElementById("messageInput");
+        let message = messageInput.value.trim();
+
+        if (message === "") return; // ❌ Không gửi tin nhắn trống
+
+        fetch("/send-message", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + localStorage.getItem("token"),
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    message: message
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    messageInput.value = ""; // ✅ Xóa nội dung sau khi gửi thành công
+                } else {
+                    console.error("Server Error: ", data.message);
+                }
+            })
+            .catch(error => console.error("Error:", error));
+    }
+
+
+
+
     function loadMessages() {
         fetch("/get-messages")
             .then(response => response.json())
