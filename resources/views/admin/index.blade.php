@@ -173,6 +173,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
+    //Cuộn thanh cuộn xuống tin nhắn mới nhất
+    function scrollToBottom() {
+        const chatBox = document.getElementById("chatBox");
+        if (chatBox) {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    }
+
     document.addEventListener("DOMContentLoaded", function() {
         console.log("⚡ Đang kết nối Laravel Echo...");
 
@@ -182,13 +190,14 @@
         }
 
         window.Echo.join('group-chat')
-            .here(users => console.log("📢 Danh sách user trong group-chat:", users))
-            .joining(user => console.log("✅ Một user vừa tham gia:", user))
-            .leaving(user => console.log("❌ Một user vừa rời khỏi:", user))
-            .error(error => console.error("❌ Lỗi khi tham gia kênh:", error))
+            // .here(users => console.log("📢 Danh sách user trong group-chat:", users))
+            // .joining(user => console.log("✅ Một user vừa tham gia:", user))
+            // .leaving(user => console.log("❌ Một user vừa rời khỏi:", user))
+            // .error(error => console.error("❌ Lỗi khi tham gia kênh:", error))
             .listen(".message.sent", (e) => {
                 console.log("📢 Tin nhắn nhận được từ server:", e);
                 addMessageToChat(e, e.user.id);
+                scrollToBottom();
             });
     });
     const doctorId = document.getElementById("currentDoctorId").value;
@@ -197,25 +206,24 @@
         const chatList = document.querySelector(".chat-list");
         const li = document.createElement("li");
         li.classList.add("chat-item");
+
         const contentDiv = document.createElement("div");
         contentDiv.classList.add("chat-content");
-        //console.log(message);
+
         if (isSender == doctorId) {
             li.classList.add("odd");
         } else {
             const imgDiv = document.createElement("div");
             imgDiv.classList.add("chat-img");
-            const imageUrl = `/storage/${message.user.doctor.image}`; // Đúng cú pháp
+            const imageUrl = `/storage/${message.user?.doctor?.image || 'default.jpg'}`;
             imgDiv.innerHTML = `<img src="${imageUrl}" alt="user" />`;
             li.appendChild(imgDiv);
 
             const nameTag = document.createElement("h6");
             nameTag.classList.add("font-medium");
-            nameTag.innerText = message.user && message.user.lastName ? message.user.lastName : "Unknown Doctor";
+            nameTag.innerText = message.user?.lastName || "Unknown Doctor";
             contentDiv.appendChild(nameTag);
         }
-
-
 
         const messageBox = document.createElement("div");
         messageBox.classList.add("box", isSender ? "bg-light-inverse" : "bg-light-info");
@@ -224,56 +232,13 @@
         contentDiv.appendChild(messageBox);
         li.appendChild(contentDiv);
         chatList.appendChild(li);
+
+        // ✅ Tự động cuộn xuống
+        scrollToBottom();
     }
 
+
     //Lấy tất cả tin nhắn khi cũ khi load trang
-    //Cach 1
-    // document.addEventListener("DOMContentLoaded", function() {
-    //     loadMessages();
-
-    //     document.getElementById("messageInput").addEventListener("keypress", function(event) {
-    //     if (event.key === "Enter") {
-    //         event.preventDefault(); // Tránh xuống dòng trong textarea
-    //         sendMessage();
-    //     }
-    //     });
-
-    //     document.getElementById("sendMessageBtn").addEventListener("click", () => {
-    //         let message = document.getElementById("messageInput").value;
-
-    //         if (message.trim() === "") {
-    //             return;
-    //         }
-
-    //         fetch("/send-message", {
-    //                 method: "POST",
-    //                 headers: {
-    //                     "Content-Type": "application/json",
-    //                     Authorization: "Bearer " + localStorage.getItem("token"),
-    //                     "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
-    //                 },
-    //                 body: JSON.stringify({
-    //                     message: message
-    //                 }),
-    //             })
-    //             .then((response) => {
-    //                 if (!response.ok) {
-    //                     throw new Error(`HTTP error! Status: ${response.status}`);
-    //                 }
-    //                 return response.json();
-    //             })
-    //             .then((data) => {
-    //                 if (data.success) {
-    //                     document.getElementById("messageInput").value = "";
-    //                 } else {
-    //                     console.error("Server Error: ", data.message);
-    //                 }
-    //             })
-    //             .catch((error) => console.error("Error:", error));
-
-    //     });
-    // })
-
     //Cach 2
     document.addEventListener("DOMContentLoaded", function() {
         loadMessages();
