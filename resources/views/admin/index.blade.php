@@ -134,84 +134,27 @@
                 <!-- Card -->
                 <div class="card">
                     <div class="card-body">
+                        <input type="hidden" id="currentDoctorId" value="{{ auth()->id() }}">
                         <h4 class="card-title">Chat Option</h4>
-                        <div class="chat-box scrollable" style="height: 475px">
-                            <!--chat Row -->
-                            <ul class="chat-list">
-                                <!--chat Row -->
-                                <li class="chat-item">
-                                    <div class="chat-img">
-                                        <img src="{{asset('backend/assets/images/users/1.jpg')}}" alt="user" />
-                                    </div>
-                                    <div class="chat-content">
-                                        <h6 class="font-medium">James Anderson</h6>
-                                        <div class="box bg-light-info">
-                                            Lorem Ipsum is simply dummy text of the printing
-                                            &amp; type setting industry.
-                                        </div>
-                                    </div>
-                                    <div class="chat-time">10:56 am</div>
-                                </li>
-                                <!--chat Row -->
-                                <li class="chat-item">
-                                    <div class="chat-img">
-                                        <img src="{{asset('backend/assets/images/users/2.jpg')}}" alt="user" />
-                                    </div>
-                                    <div class="chat-content">
-                                        <h6 class="font-medium">Bianca Doe</h6>
-                                        <div class="box bg-light-info">
-                                            It’s Great opportunity to work.
-                                        </div>
-                                    </div>
-                                    <div class="chat-time">10:57 am</div>
-                                </li>
-                                <!--chat Row -->
-                                <li class="odd chat-item">
-                                    <div class="chat-content">
-                                        <div class="box bg-light-inverse">
-                                            I would love to join the team.
-                                        </div>
-                                        <br />
-                                    </div>
-                                </li>
-                                <!--chat Row -->
-                                <li class="odd chat-item">
-                                    <div class="chat-content">
-                                        <div class="box bg-light-inverse">
-                                            Whats budget of the new project.
-                                        </div>
-                                        <br />
-                                    </div>
-                                    <div class="chat-time">10:59 am</div>
-                                </li>
-                                <!--chat Row -->
-                                <li class="chat-item">
-                                    <div class="chat-img">
-                                        <img src="{{asset('backend/assets/images/users/3.jpg')}}" alt="user" />
-                                    </div>
-                                    <div class="chat-content">
-                                        <h6 class="font-medium">Angelina Rhodes</h6>
-                                        <div class="box bg-light-info">
-                                            Well we have good budget for the project
-                                        </div>
-                                    </div>
-                                    <div class="chat-time">11:00 am</div>
-                                </li>
-                                <!--chat Row -->
-                            </ul>
-                        </div>
                     </div>
+                    <div class="chat-container" id="chatBox">
+                        <ul class="chat-list" id="messageList">
+                            <!-- Tin nhắn sẽ được thêm vào đây -->
+                        </ul>
+                    </div>
+
+
                     <div class="card-body border-top">
                         <div class="row">
                             <div class="col-9">
                                 <div class="input-field mt-0 mb-0">
-                                    <textarea id="textarea1" placeholder="Type and enter"
+                                    <textarea id="messageInput" placeholder="Type and enter"
                                         class="form-control border-0"></textarea>
                                 </div>
                             </div>
                             <div class="col-3">
-                                <a class="btn-circle btn-lg btn-cyan float-end text-white" href="javascript:void(0)"><i
-                                        class="mdi mdi-send fs-3"></i></a>
+                                <a id="sendMessageBtn" class="btn-circle btn-lg btn-cyan float-end text-white"
+                                    href="javascript:void(0)"><i class="mdi mdi-send fs-3"></i></a>
                             </div>
                         </div>
                     </div>
@@ -228,6 +171,145 @@
     <!-- ============================================================== -->
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("⚡ Đang kết nối Laravel Echo...");
+
+        if (typeof window.Echo === "undefined") {
+            console.error("❌ Laravel Echo chưa được khởi tạo!");
+            return;
+        }
+
+        window.Echo.join('group-chat')
+            .here(users => console.log("📢 Danh sách user trong group-chat:", users))
+            .joining(user => console.log("✅ Một user vừa tham gia:", user))
+            .leaving(user => console.log("❌ Một user vừa rời khỏi:", user))
+            .error(error => console.error("❌ Lỗi khi tham gia kênh:", error))
+            .listen(".message.sent", (e) => {
+                console.log("📢 Tin nhắn nhận được từ server:", e);
+               addMessageToChat(e, e.user.id);
+            });
+    });
+    const doctorId = document.getElementById("currentDoctorId").value;
+    function addMessageToChat(message, isSender) {
+        const chatList = document.querySelector(".chat-list");
+        const li = document.createElement("li");
+        li.classList.add("chat-item");
+        const contentDiv = document.createElement("div");
+        contentDiv.classList.add("chat-content");
+        //console.log(message);
+        if (isSender == doctorId) {
+            li.classList.add("odd");
+        } else {
+            const imgDiv = document.createElement("div");
+            imgDiv.classList.add("chat-img");
+            const imageUrl = `/storage/${message.user.doctor.image}`; // Đúng cú pháp
+            imgDiv.innerHTML = `<img src="${imageUrl}" alt="user" />`;
+            li.appendChild(imgDiv);
+
+            const nameTag = document.createElement("h6");
+            nameTag.classList.add("font-medium");
+            nameTag.innerText = message.user && message.user.lastName ? message.user.lastName : "Unknown Doctor";
+            contentDiv.appendChild(nameTag);
+        }
+
+
+
+        const messageBox = document.createElement("div");
+        messageBox.classList.add("box", isSender ? "bg-light-inverse" : "bg-light-info");
+        messageBox.innerText = message.message;
+
+        contentDiv.appendChild(messageBox);
+        li.appendChild(contentDiv);
+        chatList.appendChild(li);
+    }
+
+    //Lấy tất cả tin nhắn khi cũ khi load trang
+
+    document.addEventListener("DOMContentLoaded", function() {
+        loadMessages();
+
+        document.getElementById("messageInput").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Tránh xuống dòng trong textarea
+            sendMessage();
+        }
+        });
+
+        document.getElementById("sendMessageBtn").addEventListener("click", () => {
+            let message = document.getElementById("messageInput").value;
+
+            if (message.trim() === "") {
+                return;
+            }
+
+            fetch("/send-message", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + localStorage.getItem("token"),
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({
+                        message: message
+                    }),
+                })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    if (data.success) {
+                        document.getElementById("messageInput").value = "";
+                    } else {
+                        console.error("Server Error: ", data.message);
+                    }
+                })
+                .catch((error) => console.error("Error:", error));
+
+        });
+    })
+
+    
+    
+    function loadMessages() {
+        fetch("/get-messages")
+            .then(response => response.json())
+            .then(messages => {
+                const chatBox = document.getElementById("chatBox");
+                const messageList = document.getElementById("messageList");
+                messageList.innerHTML = ""; // Xóa tin nhắn cũ trước khi nạp mới
+                messages.forEach(message => {
+                    addMessageToChat(message, message.doctorId);
+                });
+                chatBox.scrollTop = chatBox.scrollHeight;
+            })
+            .catch(error => console.error("Error loading messages: ", error));
+    }
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Lấy dữ liệu từ Laravel (nhúng vào Blade)

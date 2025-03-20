@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HandbookController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\DoctorMiddleware;
@@ -118,9 +119,5 @@ Route::prefix('contacts')->middleware(['auth', AdminDoctorMiddleware::class])->g
    // Route::get('view-contact/{id}',[ContactController::class, 'viewOneContact']);
 });
 
-//Chat
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/chat-rooms', [ChatController::class, 'getChatRooms']);
-    Route::get('/messages/{roomId}', [ChatController::class, 'getMessages']);
-    Route::post('/send-message', [ChatController::class, 'sendMessage']);
-});
+Route::post('send-message', [ChatController::class, 'sendMessage']);
+Route::get('get-messages', [ChatController::class, 'getMessages']);
