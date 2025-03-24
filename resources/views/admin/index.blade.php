@@ -195,7 +195,7 @@
             // .leaving(user => console.log("❌ Một user vừa rời khỏi:", user))
             // .error(error => console.error("❌ Lỗi khi tham gia kênh:", error))
             .listen(".message.sent", (e) => {
-                console.log("📢 Tin nhắn nhận được từ server:", e);
+                //console.log("📢 Tin nhắn nhận được từ server:", e);
                 addMessageToChat(e, e.user.id);
                 scrollToBottom();
             });
@@ -236,10 +236,7 @@
         // ✅ Tự động cuộn xuống
         scrollToBottom();
     }
-
-
     //Lấy tất cả tin nhắn khi cũ khi load trang
-    //Cach 2
     document.addEventListener("DOMContentLoaded", function() {
         loadMessages();
 
@@ -282,10 +279,7 @@
             })
             .catch(error => console.error("Error:", error));
     }
-
-
-
-
+    
     function loadMessages() {
         fetch("/get-messages")
             .then(response => response.json())
@@ -302,25 +296,8 @@
     }
     </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <script>
+    //CHART
     document.addEventListener("DOMContentLoaded", function() {
         // Lấy dữ liệu từ Laravel (nhúng vào Blade)
         let months = @json($months);
@@ -383,8 +360,9 @@
     </script>
 
 
-
+    
     <script>
+    //POST MANAGE
     function changeStatus(element) {
         let id = element.getAttribute('data-id');
         $.ajax({
