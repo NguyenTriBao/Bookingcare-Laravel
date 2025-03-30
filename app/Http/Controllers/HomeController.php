@@ -10,7 +10,9 @@ class HomeController extends Controller
 {
     public function show(){
         $specialties = Specialty::get();
-        $doctors = Doctor::get();
+        $doctors = Doctor::with('user')->whereHas('user', function($query) {
+            $query->where('roleId', 'R2'); // Lọc theo roleId của user
+        })->get();
         return view ('clients.index', compact('specialties','doctors'));
     }
 }

@@ -43,6 +43,7 @@
 <body>
     @include('clients.components.header')
     @yield('content')
+    @include('clients.components.chatbot') <!-- 👈 Tạo file chatbot riêng -->
     @include('clients.components.footer')
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

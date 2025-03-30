@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SpecialtyController;
 use App\Http\Controllers\UserController;
@@ -10,10 +11,14 @@ use App\Http\Controllers\HandbookController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controller\ChatbotController;
+
 use Illuminate\Support\Facades\Auth;
+
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\DoctorMiddleware;
 use App\Http\Middleware\AdminDoctorMiddleware;
+
 
 Route::get('/admin', function () {
     return view('admin.login');
@@ -121,3 +126,6 @@ Route::prefix('contacts')->middleware(['auth', AdminDoctorMiddleware::class])->g
 
 Route::post('send-message', [ChatController::class, 'sendMessage']);
 Route::get('get-messages', [ChatController::class, 'getMessages']);
+
+//Chatbot
+Route::post('/chatbot',[ChatbotController::class, 'talkToBot']);
